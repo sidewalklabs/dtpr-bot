@@ -1,0 +1,191 @@
+[
+  {
+    "value": "Video camera",
+    "synonyms": [
+      "Video camera"
+    ]
+  },
+  {
+    "value": "Video camera - infrared",
+    "synonyms": [
+      "Video camera - infrared",
+      "Infrared video camera",
+      "ir video camera"
+    ]
+  },
+  {
+    "value": "Still camera",
+    "synonyms": [
+      "Still camera",
+      "camera"
+    ]
+  },
+  {
+    "value": "Still camera - infrared",
+    "synonyms": [
+      "Still camera - infrared",
+      "ir camera",
+      "camera infrared"
+    ]
+  },
+  {
+    "value": "Assistance Station",
+    "synonyms": [
+      "Assistance Station"
+    ]
+  },
+  {
+    "value": "Microphone",
+    "synonyms": [
+      "Microphone"
+    ]
+  },
+  {
+    "value": "Passive Infrared Sensor",
+    "synonyms": [
+      "Passive Infrared Sensor",
+      "pir"
+    ]
+  },
+  {
+    "value": "Soil Mositure Sensor",
+    "synonyms": [
+      "Soil Mositure Sensor",
+      "Soil Moisture"
+    ]
+  },
+  {
+    "value": "Water Quality Sensor",
+    "synonyms": [
+      "Water Quality",
+      "Water Quality Sensor"
+    ]
+  },
+  {
+    "value": "Sound Level Meter",
+    "synonyms": [
+      "Sound Level Meter",
+      "decibel meter",
+      "loudness sensor"
+    ]
+  },
+  {
+    "value": "radar",
+    "synonyms": [
+      "radar"
+    ]
+  },
+  {
+    "value": "LiDAR",
+    "synonyms": [
+      "LiDAR",
+      "lidar"
+    ]
+  },
+  {
+    "value": "Air Quality Sensor",
+    "synonyms": [
+      "Air Quality Sensor",
+      "Air Quality"
+    ]
+  },
+  {
+    "value": "Weather Station",
+    "synonyms": [
+      "Weather Sensor",
+      "Weather Station"
+    ]
+  },
+  {
+    "value": "Wireless Access Point",
+    "synonyms": [
+      "Wireless Access Point"
+    ]
+  },
+  {
+    "value": "RFID",
+    "synonyms": [
+      "RFID",
+      "rfid",
+      "rfid tags",
+      "radio frequency id",
+      "radio frequency id chip",
+      "radio frequency id tag"
+    ]
+  },
+  {
+    "value": "NFC",
+    "synonyms": [
+      "NFC",
+      "near field communication",
+      "nfc chip"
+    ]
+  },
+  {
+    "value": "Thermometer",
+    "synonyms": [
+      "Thermometer"
+    ]
+  },
+  {
+    "value": "Identifiable NFC",
+    "synonyms": [
+      "Identifiable NFC",
+      "Identifiable near field communication",
+      "identifiable nfc chip",
+      "identifiable near field communication chip"
+    ]
+  },
+  {
+    "value": "identifiable RFID",
+    "synonyms": [
+      "identifiable RFID",
+      "identifiable rfid chip"
+    ]
+  },
+  {
+    "value": "Video",
+    "synonyms": [
+      "Video"
+    ]
+  },
+  {
+    "value": "Voice",
+    "synonyms": [
+      "Voice",
+      "Speech",
+      "Vocal"
+    ]
+  },
+  {
+    "value": "Image",
+    "synonyms": [
+      "Image",
+      "Picture"
+    ]
+  },
+  {
+    "value": "Physical Tamper Proofing \u0026 Software Isolation",
+    "synonyms": [
+      "Physical Tamper Proofing \u0026 Software Isolation"
+    ]
+  },
+  {
+    "value": "De-identification",
+    "synonyms": [
+      "De-identification"
+    ]
+  },
+  {
+    "value": "Tamper Evident DesignOpen Source Audibility",
+    "synonyms": [
+      "Tamper Evident Design"
+    ]
+  },
+  {
+    "value": "Open Source Audibility",
+    "synonyms": [
+      "Open Source Audibility"
+    ]
+  }
+]

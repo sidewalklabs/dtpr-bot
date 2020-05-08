@@ -1,0 +1,75 @@
+[
+  {
+    "value": "Enforcement",
+    "synonyms": [
+      "Enforcement",
+      "compliance",
+      "ensure"
+    ]
+  },
+  {
+    "value": "Energy Efficiency",
+    "synonyms": [
+      "Energy Efficiency",
+      "energy conservation",
+      "conservation",
+      "energy saving",
+      "power saving",
+      "power conservation"
+    ]
+  },
+  {
+    "value": "Mobility",
+    "synonyms": [
+      "move",
+      "move around"
+    ]
+  },
+  {
+    "value": "Inform",
+    "synonyms": [
+      "Inform"
+    ]
+  },
+  {
+    "value": "Planning",
+    "synonyms": [
+      "Planning",
+      "Decision Making",
+      "Urban Planning",
+      "Strategy",
+      "Scheduling",
+      "Design",
+      "Preparation",
+      "Planning and Decision Making",
+      "planning \u0026 decision making",
+      "decision making"
+    ]
+  },
+  {
+    "value": "Safety \u0026 Security",
+    "synonyms": [
+      "Safety \u0026 Security",
+      "safety",
+      "security",
+      "fire safety",
+      "building safety",
+      "building security",
+      "protection",
+      "safeguard",
+      "secure",
+      "guard"
+    ]
+  },
+  {
+    "value": "Accessiblity",
+    "synonyms": [
+      "Accessiblity",
+      "Assistive",
+      "Equitable",
+      "Ergonomic",
+      "Accessible",
+      "easy access"
+    ]
+  }
+]

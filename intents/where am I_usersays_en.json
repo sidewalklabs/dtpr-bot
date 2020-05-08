@@ -1,0 +1,170 @@
+[
+  {
+    "id": "c93ae57c-0d76-4edf-b72f-b0bea9bd4f59",
+    "data": [
+      {
+        "text": "Where are we?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "87198f6f-8c09-496c-9742-f64ba2b1fe6e",
+    "data": [
+      {
+        "text": "Where is this?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "95e5f21a-310b-4132-839c-7248555955b5",
+    "data": [
+      {
+        "text": "What is the address here?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "bcc49dd4-3585-4564-ac41-4064c9af0e7e",
+    "data": [
+      {
+        "text": "What is the address?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "2df16a46-75b1-4b32-8daa-9adcef5729be",
+    "data": [
+      {
+        "text": "What location does this ",
+        "userDefined": false
+      },
+      {
+        "text": "system",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " belong to?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "84268c06-5b3e-41ef-9b72-61a30613c682",
+    "data": [
+      {
+        "text": "What ",
+        "userDefined": false
+      },
+      {
+        "text": "place",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " has this sensor?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "eed95812-0e96-46b5-861f-6d4e55f4a855",
+    "data": [
+      {
+        "text": "What location is this?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "9d9e48ef-d94f-4f66-a3f4-7a33a3f690e2",
+    "data": [
+      {
+        "text": "What ",
+        "userDefined": false
+      },
+      {
+        "text": "place",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " is this?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "ef5c5a97-555a-4cdd-9867-ac1e2c810953",
+    "data": [
+      {
+        "text": "Where is this sensor?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "9fc6eef0-2e90-4a05-bc70-6fe6d2c06358",
+    "data": [
+      {
+        "text": "What is this ",
+        "userDefined": false
+      },
+      {
+        "text": "place",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 0
+  },
+  {
+    "id": "d2dd2dc7-f6e2-4098-b13e-f96ebeb4ca65",
+    "data": [
+      {
+        "text": "Where am I?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

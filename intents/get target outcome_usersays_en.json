@@ -1,0 +1,122 @@
+[
+  {
+    "id": "b19d9b0f-8302-4bf5-af08-9d70335f6da1",
+    "data": [
+      {
+        "text": "How is this helping people?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "88f56312-67b5-4315-9e48-d1493b6dc17e",
+    "data": [
+      {
+        "text": "What is the target?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4db4aa17-690f-43a5-8c35-7506a7f51c0f",
+    "data": [
+      {
+        "text": "Does this benefit people?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "a5ea02e3-f676-4a43-81ac-04c0ea927865",
+    "data": [
+      {
+        "text": "What are you trying to do with it",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "279c768a-88e0-4947-8183-11b2bdc960a4",
+    "data": [
+      {
+        "text": "Is there a target metric?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 0
+  },
+  {
+    "id": "e5a35bb2-2e0c-4ccf-864a-09198fa12f7e",
+    "data": [
+      {
+        "text": "Do you measure outcomes?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "49cb1735-1a71-4cee-b5b5-c6d08b8f1b91",
+    "data": [
+      {
+        "text": "Is there a benefit to people?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "9ce54ab9-07f4-4112-84ce-691f88ea8dd7",
+    "data": [
+      {
+        "text": "Is there a target outcome?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "52eaa572-0695-44f7-931a-40f8e1363440",
+    "data": [
+      {
+        "text": "What is the benefit?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "2202886e-664e-40eb-9341-9c47d5509179",
+    "data": [
+      {
+        "text": "What is the target outcome?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

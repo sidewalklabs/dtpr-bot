@@ -1,0 +1,141 @@
+[
+  {
+    "value": "Security Camera",
+    "synonyms": [
+      "security camera",
+      "security monitor",
+      "cctv",
+      "cctv monitor",
+      "video security",
+      "security recorder"
+    ]
+  },
+  {
+    "value": "Numina Sensor",
+    "synonyms": [
+      "numina",
+      "deidentified video camera",
+      "de-aggregated video camera"
+    ]
+  },
+  {
+    "value": "Thermostat",
+    "synonyms": [
+      "thermostat"
+    ]
+  },
+  {
+    "value": "Switch",
+    "synonyms": [
+      "manager",
+      "director",
+      "governor",
+      "valve",
+      "controller",
+      "on switch",
+      "light switch",
+      "faucet switch"
+    ]
+  },
+  {
+    "value": "Temperature Sensor",
+    "synonyms": [
+      "temperature sensor",
+      "thermometer"
+    ]
+  },
+  {
+    "value": "Infrared Motion Sensor",
+    "synonyms": [
+      "infrared motion sensor",
+      "motion sensor",
+      "ir sensor",
+      "pir",
+      "passive infrared sensor"
+    ]
+  },
+  {
+    "value": "Smoke Detector",
+    "synonyms": [
+      "smoke detector",
+      "fire alarm"
+    ]
+  },
+  {
+    "value": "Door Lock",
+    "synonyms": [
+      "door lock"
+    ]
+  },
+  {
+    "value": "Sound Level Meter",
+    "synonyms": [
+      "sound level meter",
+      "decibel sensor",
+      "volume meter",
+      "loudness sensor"
+    ]
+  },
+  {
+    "value": "microphone",
+    "synonyms": [
+      "microphone",
+      "mic",
+      "sound recorder",
+      "sound sensor"
+    ]
+  },
+  {
+    "value": "Door Lock",
+    "synonyms": [
+      "door lock",
+      "lock",
+      "automatic door lock",
+      "connected door lock"
+    ]
+  },
+  {
+    "value": "Infrared Depth Sensor",
+    "synonyms": [
+      "Infrared Depth Sensor",
+      "ir depth sensor"
+    ]
+  },
+  {
+    "value": "Light Switches",
+    "synonyms": [
+      "Light Switches"
+    ]
+  },
+  {
+    "value": "Faucet Switches",
+    "synonyms": [
+      "Faucet Switches"
+    ]
+  },
+  {
+    "value": "Radar Occupany Sensor",
+    "synonyms": [
+      "Radar Occupany Sensor"
+    ]
+  },
+  {
+    "value": "Computer Vision Camera",
+    "synonyms": [
+      "Computer Vision Camera",
+      "Computer Vision",
+      "Computer Vision Video",
+      "Computer Vision Video Camera"
+    ]
+  },
+  {
+    "value": "Light Level Sensor",
+    "synonyms": [
+      "Light Level Meter",
+      "Light Level Sensor",
+      "Light Sensor",
+      "Lux Sensor",
+      "Ambient Light Sensor"
+    ]
+  }
+]

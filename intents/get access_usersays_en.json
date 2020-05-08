@@ -1,0 +1,50 @@
+[
+  {
+    "id": "299d13ad-f6f7-46f1-9a6d-018dec65be9f",
+    "data": [
+      {
+        "text": "Who has access to it?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "00036211-2f3e-440e-ac4d-50d69df87981",
+    "data": [
+      {
+        "text": "Who can see the data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "231a29c2-1580-435d-a91e-80e41e8482ea",
+    "data": [
+      {
+        "text": "Who can see it?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "bc8d9523-d543-454d-a4bf-a1723f96f985",
+    "data": [
+      {
+        "text": "Who has access to the data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

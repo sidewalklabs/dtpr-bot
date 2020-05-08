@@ -1,0 +1,9 @@
+{
+  "id": "8284d945-bbad-4724-aa3b-018f5af93508",
+  "name": "data-process",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}

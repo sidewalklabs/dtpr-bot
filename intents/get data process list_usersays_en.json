@@ -1,0 +1,329 @@
+[
+  {
+    "id": "c8cb25d6-5494-442c-9f26-dfd65a9fc880",
+    "data": [
+      {
+        "text": "Is the data kept safe?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "cf7c87d9-f7bd-45dd-be8e-1fd155582022",
+    "data": [
+      {
+        "text": "Do you know what happens to the data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "adb58d62-1a8f-4e15-b0eb-1d4cf1a8c933",
+    "data": [
+      {
+        "text": "What about the data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e45609ba-b504-41b9-b5ac-bc93abdf76b3",
+    "data": [
+      {
+        "text": "What happens to my data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "7da47af1-d530-4b6f-8ae1-8c89cd34a267",
+    "data": [
+      {
+        "text": "What happens to the data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 0
+  },
+  {
+    "id": "83fbeab7-87bd-4c8a-a027-e5c664c0354d",
+    "data": [
+      {
+        "text": "Do you know how the data is handled?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "dee850f1-78ed-46b6-9044-6abe71420660",
+    "data": [
+      {
+        "text": "Do you know how my data is handled?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "7f58f114-ef45-4834-95be-31370aaab34d",
+    "data": [
+      {
+        "text": "What data practices are used?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "8d382e75-6af2-4417-a132-1f506d74a24c",
+    "data": [
+      {
+        "text": "What kind of data protections are there?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "6c1a0efc-1122-4ece-9078-a5788de47177",
+    "data": [
+      {
+        "text": "How is the data protected?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "1cc56b0c-acf1-4014-b5e2-c555eb0bb32d",
+    "data": [
+      {
+        "text": "How is my data protected?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "81e22728-a699-4263-919d-9fb1d1c0040b",
+    "data": [
+      {
+        "text": "data process",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "ad9af761-e32d-43f2-86ee-a9aed6e00fbf",
+    "data": [
+      {
+        "text": "data processes",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "44d7367e-cf09-415a-a8b4-a39f6016c587",
+    "data": [
+      {
+        "text": "How is my data kept ",
+        "userDefined": false
+      },
+      {
+        "text": "safe",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "5790167d-653a-4cee-8bdb-19ae52a8d926",
+    "data": [
+      {
+        "text": "How is the data kept ",
+        "userDefined": false
+      },
+      {
+        "text": "safe",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "95251e93-2859-45d6-99f3-7c9974e51bc2",
+    "data": [
+      {
+        "text": "Is the data ",
+        "userDefined": false
+      },
+      {
+        "text": "safe",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 0
+  },
+  {
+    "id": "bcd44fea-6e0d-4991-a3e4-475c72a9c471",
+    "data": [
+      {
+        "text": "How is my data ",
+        "userDefined": false
+      },
+      {
+        "text": "processed",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "370dee82-2cfd-46a3-b6c7-b3434e15bc5c",
+    "data": [
+      {
+        "text": "What data ",
+        "userDefined": false
+      },
+      {
+        "text": "processes",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": " are used?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "0f588f33-1f33-4612-b9c2-f62b16cd51c8",
+    "data": [
+      {
+        "text": "How is the data ",
+        "userDefined": false
+      },
+      {
+        "text": "processed",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "b7be568d-ecf4-48e8-bba8-45fe8a3047dd",
+    "data": [
+      {
+        "text": "Is the data ",
+        "userDefined": false
+      },
+      {
+        "text": "protected",
+        "meta": "@sys.ignore",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "a5a37a85-c079-4c91-989d-d929a38ccb8e",
+    "data": [
+      {
+        "text": "How is my data handled?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 0
+  },
+  {
+    "id": "b0b7fdc3-0a26-40a0-ab13-b7ed3d7fbe22",
+    "data": [
+      {
+        "text": "How is the data handled?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

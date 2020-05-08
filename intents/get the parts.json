@@ -1,0 +1,56 @@
+{
+  "id": "5bffb7d8-7b9f-47ce-86a6-807ed57f7e79",
+  "name": "get the parts",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "443613f2-c822-4fee-8fa8-09fc88ab0982",
+          "required": false,
+          "dataType": "@system",
+          "name": "system",
+          "value": "$system",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "077ea854-fd59-4bdb-81c2-7e6ed52be3d5",
+          "required": false,
+          "dataType": "@component",
+          "name": "component",
+          "value": "$component",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

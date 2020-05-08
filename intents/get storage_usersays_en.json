@@ -1,0 +1,120 @@
+[
+  {
+    "id": "75137463-dfba-4db1-b27a-3a227581bdec",
+    "data": [
+      {
+        "text": "Is the data stored in ",
+        "userDefined": false
+      },
+      {
+        "text": "Canada",
+        "alias": "geo-country",
+        "meta": "@sys.geo-country",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "f45de3bb-c912-4f85-999f-6157d58f9428",
+    "data": [
+      {
+        "text": "Is the data stored here?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "74523e44-5438-4bf1-a948-475f830351e9",
+    "data": [
+      {
+        "text": "Who stores the data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "a5a13dc9-39f2-4de0-88d9-5d1592744e7d",
+    "data": [
+      {
+        "text": "Who stores it?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "27c1be16-f732-47b4-90b4-a8fa0788ba08",
+    "data": [
+      {
+        "text": "Who has the data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "df2da5c0-e188-4176-83ef-a620d6d30ee2",
+    "data": [
+      {
+        "text": "Where is the data?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "8ade8832-85b9-485e-b5c7-ed8c697679fb",
+    "data": [
+      {
+        "text": "Where is the info stored?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e955a466-039e-48e9-8ca8-1555981c7fea",
+    "data": [
+      {
+        "text": "Where is it stored?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "f3a1a07a-17cd-4792-9056-72e191dd5ae4",
+    "data": [
+      {
+        "text": "Where is the data stored?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

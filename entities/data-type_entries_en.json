@@ -1,0 +1,72 @@
+[
+  {
+    "value": "Values / Time",
+    "synonyms": [
+      "Values / Time",
+      "values / time",
+      "values/time",
+      "Values/Time",
+      "values over time",
+      "time series",
+      "time based",
+      "time / values",
+      "time/values"
+    ]
+  },
+  {
+    "value": "Pixel-based Image",
+    "synonyms": [
+      "Pixel-based Image",
+      "pixel",
+      "image",
+      "picture"
+    ]
+  },
+  {
+    "value": "Boolean",
+    "synonyms": [
+      "Boolean",
+      "boolean",
+      "true/false",
+      "bool"
+    ]
+  },
+  {
+    "value": "Tabular",
+    "synonyms": [
+      "Tabular"
+    ]
+  },
+  {
+    "value": "Spatial",
+    "synonyms": [
+      "Spatial",
+      "geo-spatial",
+      "geospatial",
+      "geographic"
+    ]
+  },
+  {
+    "value": "Binary",
+    "synonyms": [
+      "Binary"
+    ]
+  },
+  {
+    "value": "Personal Information",
+    "synonyms": [
+      "Personal Information",
+      "Personal Data",
+      "Personal Info",
+      "pid",
+      "personally identifiable data"
+    ]
+  },
+  {
+    "value": "Non-Personal Information",
+    "synonyms": [
+      "Non-Personal Information",
+      "non-personal data"
+    ]
+  }
+]

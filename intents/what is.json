@@ -1,0 +1,140 @@
+{
+  "id": "0c6f6ca3-0ee1-4f08-a607-27210896018a",
+  "name": "what is",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "c3a8b667-1212-411a-84b5-ef87ddc72918",
+          "required": false,
+          "dataType": "@component",
+          "name": "component",
+          "value": "$component",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "bdcf7ae6-3989-4cc4-85e2-68a157c1b787",
+          "required": false,
+          "dataType": "@sys.address",
+          "name": "address",
+          "value": "$address",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "ef66620f-e937-4737-aa2b-95eaadcffe5c",
+          "required": false,
+          "dataType": "@sys.location",
+          "name": "location",
+          "value": "$location",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "6ccc57de-aac8-4d81-a88b-f2ab6041048b",
+          "required": false,
+          "dataType": "@sys.place-attraction",
+          "name": "place-attraction",
+          "value": "$place-attraction",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "1973b9eb-a291-4b74-80c4-ac6eba755c93",
+          "required": false,
+          "dataType": "@Purpose",
+          "name": "Purpose",
+          "value": "$Purpose",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "c567c528-c651-4cce-b62d-910b67e8d345",
+          "required": false,
+          "dataType": "@data-process",
+          "name": "data-process",
+          "value": "$data-process",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "c970d678-e61b-44f2-a0f0-db58f4999081",
+          "required": false,
+          "dataType": "@technology-type",
+          "name": "technology-type",
+          "value": "$technology-type",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "19708025-5fdd-4605-8479-0c7bc00847d6",
+          "required": false,
+          "dataType": "@data-type",
+          "name": "data-type",
+          "value": "$data-type",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "e524eaf0-56b7-4955-a178-02c6db845d08",
+          "required": false,
+          "dataType": "@system",
+          "name": "system",
+          "value": "$system",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

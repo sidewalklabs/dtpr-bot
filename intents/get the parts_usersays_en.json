@@ -1,0 +1,184 @@
+[
+  {
+    "id": "0b6b6ef7-ea8a-475b-80a7-2961ee0946f0",
+    "data": [
+      {
+        "text": "Does it have ",
+        "userDefined": false
+      },
+      {
+        "text": "other sensors",
+        "alias": "component",
+        "meta": "@component",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "fd9f7a36-1ebf-40b5-99ad-cda5b8e66f52",
+    "data": [
+      {
+        "text": "What components does it have?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "36b42062-ed78-4723-b33f-ca1dadcb81ab",
+    "data": [
+      {
+        "text": "child components",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "421ad260-358a-44c9-a657-1719dfa0aea4",
+    "data": [
+      {
+        "text": "What is the ",
+        "userDefined": false
+      },
+      {
+        "text": "security camera",
+        "alias": "component",
+        "meta": "@component",
+        "userDefined": true
+      },
+      {
+        "text": " made up of?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "ff288a9c-15be-452d-bcbb-e09f3d39fe60",
+    "data": [
+      {
+        "text": "What is the ",
+        "userDefined": false
+      },
+      {
+        "text": "safety and security system",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      },
+      {
+        "text": " made up of?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "13c20a7b-d8c8-4980-9ebb-dce05b49f945",
+    "data": [
+      {
+        "text": "How does it work?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "0a8aad21-b92c-4ae5-88b8-26fb14e30eb6",
+    "data": [
+      {
+        "text": "How does the ",
+        "userDefined": false
+      },
+      {
+        "text": "security camera",
+        "alias": "component",
+        "meta": "@component",
+        "userDefined": true
+      },
+      {
+        "text": " work?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "af2a8541-3783-4567-a31c-4f8d48d1397a",
+    "data": [
+      {
+        "text": "How does the ",
+        "userDefined": false
+      },
+      {
+        "text": "safety and security system",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      },
+      {
+        "text": " work?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "702fa60e-e46b-499e-b6c1-c44864f16ff4",
+    "data": [
+      {
+        "text": "How does this system work?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "a0d0d541-c5a1-4f24-b1b6-98cc7d3262cf",
+    "data": [
+      {
+        "text": "Does this have any parts to it?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "f235451e-d507-4b61-a9a2-ef83ecd0acd8",
+    "data": [
+      {
+        "text": "What are the subcomponents?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

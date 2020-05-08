@@ -1,0 +1,86 @@
+[
+  {
+    "id": "8e04ab0f-7afa-4c2f-b086-ff72b023080d",
+    "data": [
+      {
+        "text": "How long do they keep it?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4df9cf04-094b-41b8-b530-da8c30755972",
+    "data": [
+      {
+        "text": "When is it deleted?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4fc07b90-a914-4d7e-acc4-fe5d5cae19b5",
+    "data": [
+      {
+        "text": "How long until the data is destroyed?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "212982fb-6250-48a0-b2d0-ad2177ccf099",
+    "data": [
+      {
+        "text": "How long does the data live?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "9d96849f-4650-462a-b32d-fa94bc6890dd",
+    "data": [
+      {
+        "text": "How long do you keep it?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "bbd475f4-35e0-4cdf-bfeb-0800976c1f0a",
+    "data": [
+      {
+        "text": "How long is it kept?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d8aace28-47dc-476a-a134-68e17b5986ab",
+    "data": [
+      {
+        "text": "How long is the data kept?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

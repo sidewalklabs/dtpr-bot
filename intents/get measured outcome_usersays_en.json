@@ -1,0 +1,98 @@
+[
+  {
+    "id": "d8b20c81-567c-466d-a7b4-75b7d1a689cb",
+    "data": [
+      {
+        "text": "How has it helped?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "a1fb9a35-915b-4f7d-a626-61e9ff6a6c2e",
+    "data": [
+      {
+        "text": "How does it benefit people?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "3d7e65c4-2eaa-4530-827f-51705330c7c6",
+    "data": [
+      {
+        "text": "How has it benefited society?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "13322031-375d-43a1-ae96-c8df40acd418",
+    "data": [
+      {
+        "text": "How has this benefitted people?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "786707f1-8bad-4d5b-b641-e48fbc40d0ad",
+    "data": [
+      {
+        "text": "What is the measured outcome?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "8dbf374a-71fb-4317-98db-4ac43361b8d8",
+    "data": [
+      {
+        "text": "What was the measured outcome?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d7ced2bd-8582-4471-a712-2e647e26900e",
+    "data": [
+      {
+        "text": "How is the progress against the  outcome?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "09bdfec9-0c9a-47fb-ac26-378b6f25be92",
+    "data": [
+      {
+        "text": "Did it meet it\u0027s target?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

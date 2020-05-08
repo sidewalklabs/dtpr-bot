@@ -1,0 +1,9 @@
+{
+  "id": "8a208cef-acc0-4899-95f8-682f52b776cd",
+  "name": "system",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}

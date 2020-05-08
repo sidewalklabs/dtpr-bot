@@ -1,0 +1,56 @@
+{
+  "id": "7f138124-1b68-4bb5-ae4b-7bd15fa5acb3",
+  "name": "get accountability",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "c2f9b95c-23a6-4677-a38f-1a77a7897c4a",
+          "required": false,
+          "dataType": "@component",
+          "name": "component",
+          "value": "$component",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "ec24407e-ec0c-40d8-bc71-35d38b9db1b7",
+          "required": false,
+          "dataType": "@Purpose",
+          "name": "Purpose",
+          "value": "$Purpose",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

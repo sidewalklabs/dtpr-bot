@@ -1,0 +1,682 @@
+[
+  {
+    "id": "e7b404fe-4362-4753-991d-bee306db6376",
+    "data": [
+      {
+        "text": "Hi what am ",
+        "userDefined": false
+      },
+      {
+        "text": "I looking at",
+        "alias": "Purpose",
+        "meta": "@Purpose",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "be912414-ccdb-41ce-8aaf-610dc20778b0",
+    "data": [
+      {
+        "text": "infrared motion sensor",
+        "alias": "component",
+        "meta": "@component",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "84de0cc7-f21f-4ba0-a17c-f955c78d49d6",
+    "data": [
+      {
+        "text": "describe the ",
+        "userDefined": false
+      },
+      {
+        "text": "waste management system",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "1e81b9c2-ba65-4a97-822d-b208a71167f9",
+    "data": [
+      {
+        "text": "Tell me about the ",
+        "userDefined": false
+      },
+      {
+        "text": "waste management system",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e9e7631d-0a93-4064-b8a4-041f81f40c52",
+    "data": [
+      {
+        "text": "What is the ",
+        "userDefined": false
+      },
+      {
+        "text": "Climate Positive Building System",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      },
+      {
+        "text": " for?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "f5061307-a8b5-47ac-bea4-162ce6cfd055",
+    "data": [
+      {
+        "text": "Climate Positive Building System",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "56defc40-7664-494e-a4d3-90e4f23d2551",
+    "data": [
+      {
+        "text": "What is a ",
+        "userDefined": false
+      },
+      {
+        "text": "Climate Positive Building System",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "5e44c6f2-b8f4-4c06-933c-1f10a88e3531",
+    "data": [
+      {
+        "text": "What is the ",
+        "userDefined": false
+      },
+      {
+        "text": "Climate Positive Building System",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "67217269-95a2-4e2f-9975-38a45ebf2c1a",
+    "data": [
+      {
+        "text": "What is ",
+        "userDefined": false
+      },
+      {
+        "text": "Personal Information",
+        "alias": "data-type",
+        "meta": "@data-type",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4abe8daf-7bb3-4969-a704-8ba350a98c9e",
+    "data": [
+      {
+        "text": "What does ",
+        "userDefined": false
+      },
+      {
+        "text": "tabular",
+        "alias": "data-type",
+        "meta": "@data-type",
+        "userDefined": true
+      },
+      {
+        "text": " mean?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e25886a1-2a77-49bd-a4d7-12ba773ca706",
+    "data": [
+      {
+        "text": "What does ",
+        "userDefined": false
+      },
+      {
+        "text": "geo-spatial",
+        "alias": "data-type",
+        "meta": "@data-type",
+        "userDefined": true
+      },
+      {
+        "text": " mean?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "fd31fcd3-3063-4e65-a320-7c1b6a597fa0",
+    "data": [
+      {
+        "text": "What is ",
+        "userDefined": false
+      },
+      {
+        "text": "spatial",
+        "alias": "data-type",
+        "meta": "@data-type",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "2be5040f-28a4-4bfa-bf65-ccd3a43af24b",
+    "data": [
+      {
+        "text": "What does ",
+        "userDefined": false
+      },
+      {
+        "text": "accessibility",
+        "alias": "technology-type",
+        "meta": "@technology-type",
+        "userDefined": true
+      },
+      {
+        "text": " mean?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "c2251494-4f33-415f-bd46-0f66fe7f69f6",
+    "data": [
+      {
+        "text": "What does ",
+        "userDefined": false
+      },
+      {
+        "text": "nfc",
+        "alias": "technology-type",
+        "meta": "@technology-type",
+        "userDefined": true
+      },
+      {
+        "text": " mean?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "0fec5f02-87ac-4ee4-ab4d-05ba8abc3e01",
+    "data": [
+      {
+        "text": "What does ",
+        "userDefined": false
+      },
+      {
+        "text": "federated learning",
+        "alias": "data-process",
+        "meta": "@data-process",
+        "userDefined": true
+      },
+      {
+        "text": " mean?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "dfd3e9db-4175-4f5e-ab85-b2c78cd06369",
+    "data": [
+      {
+        "text": "What is ",
+        "userDefined": false
+      },
+      {
+        "text": "federated learning",
+        "alias": "data-process",
+        "meta": "@data-process",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "add9feed-c287-473b-8d60-582e6c959161",
+    "data": [
+      {
+        "text": "What are ",
+        "userDefined": false
+      },
+      {
+        "text": "Cryptonets",
+        "alias": "data-process",
+        "meta": "@data-process",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "68e91411-7791-4c6a-9c9a-f5980ed84fb4",
+    "data": [
+      {
+        "text": "What is ",
+        "userDefined": false
+      },
+      {
+        "text": "de-identification",
+        "alias": "technology-type",
+        "meta": "@technology-type",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "006e4006-05c4-4dba-b855-00e34b03e85b",
+    "data": [
+      {
+        "text": "What is a ",
+        "userDefined": false
+      },
+      {
+        "text": "sound level meter",
+        "alias": "technology-type",
+        "meta": "@technology-type",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "6963234c-018f-45d0-8e4a-befe3e64012e",
+    "data": [
+      {
+        "text": "what is ",
+        "userDefined": false
+      },
+      {
+        "text": "nfc",
+        "alias": "technology-type",
+        "meta": "@technology-type",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "b9b9e21a-9dd3-4e6a-892b-8e883d774600",
+    "data": [
+      {
+        "text": "what is ",
+        "userDefined": false
+      },
+      {
+        "text": "k-anonymity",
+        "alias": "data-process",
+        "meta": "@data-process",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "965bc925-66aa-4b57-ab19-eb7602022707",
+    "data": [
+      {
+        "text": "What is ",
+        "userDefined": false
+      },
+      {
+        "text": "accessibility",
+        "alias": "Purpose",
+        "meta": "@Purpose",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "2588ab06-d6e0-4dbf-94b2-d4ca55b711f2",
+    "data": [
+      {
+        "text": "What does ",
+        "userDefined": false
+      },
+      {
+        "text": "Numina",
+        "alias": "component",
+        "meta": "@component",
+        "userDefined": true
+      },
+      {
+        "text": " mean?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "992eab71-eb0a-44d6-b678-554d1b7888c1",
+    "data": [
+      {
+        "text": "What does ",
+        "userDefined": false
+      },
+      {
+        "text": "energy efficiency",
+        "alias": "Purpose",
+        "meta": "@Purpose",
+        "userDefined": true
+      },
+      {
+        "text": " mean?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "73c6623e-b857-4e82-9133-f4412e590b5e",
+    "data": [
+      {
+        "text": "What does ",
+        "userDefined": false
+      },
+      {
+        "text": "enforcement",
+        "alias": "Purpose",
+        "meta": "@Purpose",
+        "userDefined": true
+      },
+      {
+        "text": " mean?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "13081d42-0236-4fae-ad69-2f8f7e996570",
+    "data": [
+      {
+        "text": "What do you mean by ",
+        "userDefined": false
+      },
+      {
+        "text": "Energy Efficiency",
+        "alias": "Purpose",
+        "meta": "@Purpose",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "461bfc18-0e03-450d-ab85-fdabadf97de6",
+    "data": [
+      {
+        "text": "What is ",
+        "userDefined": false
+      },
+      {
+        "text": "Union Station",
+        "alias": "location",
+        "meta": "@sys.location",
+        "userDefined": false
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "244da8ac-3e2c-40af-8e0e-0f8430586b27",
+    "data": [
+      {
+        "text": "What is a ",
+        "userDefined": false
+      },
+      {
+        "text": "security camera",
+        "alias": "component",
+        "meta": "@component",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d70aa147-a0c5-4074-b65c-0cc7965e8802",
+    "data": [
+      {
+        "text": "What is a ",
+        "userDefined": false
+      },
+      {
+        "text": "Safer Streets System",
+        "alias": "system",
+        "meta": "@system",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "4eedbde1-542d-493d-a042-c17629a2dbe9",
+    "data": [
+      {
+        "text": "What is a ",
+        "userDefined": false
+      },
+      {
+        "text": "Numina",
+        "alias": "component",
+        "meta": "@component",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "b316e59a-06e0-4943-985c-18be1b9b7176",
+    "data": [
+      {
+        "text": "What is ",
+        "userDefined": false
+      },
+      {
+        "text": "307 Lakeshore Rd Toronto",
+        "alias": "address",
+        "meta": "@sys.address",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "fced613a-4d14-4508-aacf-a082af4772d2",
+    "data": [
+      {
+        "text": "What is ",
+        "userDefined": false
+      },
+      {
+        "text": "307",
+        "alias": "place-attraction",
+        "meta": "@sys.place-attraction",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

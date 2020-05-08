@@ -1,0 +1,9 @@
+{
+  "id": "3be81929-eb6a-4cf6-9c95-01227e5d6cd7",
+  "name": "technology-type",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "701922cb-5c74-4414-bf71-c4c6293412e3",
+    "data": [
+      {
+        "text": "tell me about this sensor",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "d51d77d9-2523-4dcb-886c-7f48408fc277",
+    "data": [
+      {
+        "text": "please describe it",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "0bf50189-565d-4f20-b90a-0d817fdc2515",
+    "data": [
+      {
+        "text": "describe it",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "2ebbcf96-27cb-4158-a7ca-d0b03c17376b",
+    "data": [
+      {
+        "text": "How does it work?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e1a9ff93-029d-47bb-939d-005830e44aeb",
+    "data": [
+      {
+        "text": "What does it do?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "5399df33-a228-4d93-a105-e58e09834db8",
+    "data": [
+      {
+        "text": "What type of sensor is it?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "228b5382-5187-4aae-a1ea-df216efeb6a6",
+    "data": [
+      {
+        "text": "What is it?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

@@ -1,0 +1,151 @@
+[
+  {
+    "value": "RDUA Approved",
+    "synonyms": [
+      "RDUA Approved"
+    ]
+  },
+  {
+    "value": "Reviewed Internally",
+    "synonyms": [
+      "Reviewed Internally"
+    ]
+  },
+  {
+    "value": "Encrypted",
+    "synonyms": [
+      "Encrypted"
+    ]
+  },
+  {
+    "value": "Aggregated",
+    "synonyms": [
+      "Aggregated"
+    ]
+  },
+  {
+    "value": "Raw Data",
+    "synonyms": [
+      "Raw Data"
+    ]
+  },
+  {
+    "value": "Regulated",
+    "synonyms": [
+      "Regulated"
+    ]
+  },
+  {
+    "value": "AI",
+    "synonyms": [
+      "AI",
+      "Machine Learning",
+      "ML",
+      "Artificial Intelligence",
+      "Machine Intelligence",
+      "Deep Learning"
+    ]
+  },
+  {
+    "value": "De-indentified",
+    "synonyms": [
+      "De-indentified"
+    ]
+  },
+  {
+    "value": "Federated Learning",
+    "synonyms": [
+      "Federated Learning"
+    ]
+  },
+  {
+    "value": "Homomorphic Encryption",
+    "synonyms": [
+      "Homomorphic Encryption"
+    ]
+  },
+  {
+    "value": "Secure Multi-Party Computing",
+    "synonyms": [
+      "Secure"
+    ]
+  },
+  {
+    "value": "Trusted Execution Environment",
+    "synonyms": [
+      "Trusted Execution Enclave",
+      "TEE",
+      "Trusted Environment",
+      "Trusted Execution Environment"
+    ]
+  },
+  {
+    "value": "Differential Privacy",
+    "synonyms": [
+      "Differential Privacy"
+    ]
+  },
+  {
+    "value": "K-Anonymity",
+    "synonyms": [
+      "K-Anonymity",
+      "L-Diversity",
+      "T-Closeness"
+    ]
+  },
+  {
+    "value": "Cryptonets",
+    "synonyms": [
+      "Cryptonets"
+    ]
+  },
+  {
+    "value": "Immutable Query Ledger",
+    "synonyms": [
+      "Immutable Query Ledger"
+    ]
+  },
+  {
+    "value": "Transfer Layer Security",
+    "synonyms": [
+      "Transfer Layer Security",
+      "TLS"
+    ]
+  },
+  {
+    "value": "Encrypted at Rest",
+    "synonyms": [
+      "Encrypted at Rest"
+    ]
+  },
+  {
+    "value": "Zero Knowledge Proofs",
+    "synonyms": [
+      "Zero Knowledge Proofs"
+    ]
+  },
+  {
+    "value": "Hardware Audits",
+    "synonyms": [
+      "Hardware Audits"
+    ]
+  },
+  {
+    "value": "Code signing",
+    "synonyms": [
+      "Code signing"
+    ]
+  },
+  {
+    "value": "Meter Data Rate",
+    "synonyms": [
+      "Meter Data Rate"
+    ]
+  },
+  {
+    "value": "Oversight Board",
+    "synonyms": [
+      "Oversight Board"
+    ]
+  }
+]

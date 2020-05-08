@@ -1,0 +1,9 @@
+{
+  "id": "417e3256-5f32-4c62-8cd5-3683559fb80f",
+  "name": "sys.place-attraction",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": false
+}
