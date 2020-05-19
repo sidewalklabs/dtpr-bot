@@ -16,6 +16,10 @@ const base = new Airtable({
 
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
 
+const DEFAULTS = {
+  placeId: 'recHJJkuqk0AYjHa9'
+};
+
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
   const agent = new WebhookClient({
     request,
@@ -29,11 +33,13 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     return Promise.all(children.map(id => base('Components').find(id)));
   };
 
+  // payload may stored in 2 locations depending on which client the request is coming from
+  const getPayload = agent => agent.originalRequest.payload.userId ? JSON.parse(agent.originalRequest.payload.userId) : agent.originalRequest.payload;
+
   function welcome(agent) {
     agent.add('Hi I can provide information to you about technology is being used in building and spaces. What place do you want to talk about?');
-    const {
-      startingIntent
-    } = agent.originalRequest.payload;
+    const payload = getPayload(agent);
+    const { startingIntent } = payload;
     if (typeof startingIntent !== 'undefined' && startingIntent !== '') {
       console.log(`Starting Intent --> ${startingIntent}. Skipping Default Welcome & attempting to trigger starting intent.`);
       agent.setFollowupEvent(startingIntent);
@@ -48,29 +54,38 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
    */
   const getComponentId = agent => {
     console.log('=======> getComponentId()...');
-      const componentContext = agent.getContext('component-context');
-      const incomingComponentId = componentContext ? componentContext.parameters.componentId : null;
-      const originalContext = agent.originalRequest.payload;
-      console.log('=======> componentContext = ', JSON.stringify(componentContext, null, 2));
+    const componentContext = agent.getContext('component-context');
+    const incomingComponentId = componentContext ? componentContext.parameters.componentId : null;
+    const originalContext = getPayload(agent);
+    console.log('=======> componentContext = ', JSON.stringify(componentContext, null, 2));
     console.log('=======> incomingComponentId = ', JSON.stringify(incomingComponentId, null, 2));
     console.log('=======> originalContext = ', JSON.stringify(originalContext, null, 2));
     const {
-        componentId: originalComponentId
-      } = originalContext;
-      console.log('=======> originalComponentId = ', JSON.stringify(originalComponentId, null, 2));
+      componentId: originalComponentId
+    } = originalContext;
+    console.log('=======> originalComponentId = ', JSON.stringify(originalComponentId, null, 2));
     const usingId = incomingComponentId ? 'Incoming Id' : 'Original Request Id';
     console.log('=======> Which id are we using?: ', usingId);
-      const id = incomingComponentId || originalComponentId;
+    const id = incomingComponentId || originalComponentId;
     console.log('=======> id: ', id);
-      return id;
-    };
+    return id;
+  };
 
-  function learnAboutComponent(agent) {
-    const originalContext = agent.originalRequest.payload;
+  const getPlaceId = agent => {
+    const originalContext = getPayload(agent);
     const {
-      componentId,
       placeId
     } = originalContext;
+    return placeId || DEFAULTS.placeId;
+  };
+
+  function learnAboutComponent(agent) {
+    const originalContext = getPayload(agent);
+    const {
+      componentId
+    } = originalContext;
+    if (!componentId) return noComponentFallback(agent);
+    const placeId = getPlaceId(agent);
     console.log('Original Context: ', JSON.stringify(originalContext));
     agent.add('Let me take a look for the information about this component.');
     return base('Components').find(componentId)
@@ -85,39 +100,37 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       .then(place => {
         const name = place.get('Name');
         agent.add(`It's installed at ${name}. I can also tell you more about it and how the data is being handled.`);
-        agent.add(new Suggestion('What is it?'));
-        agent.add(new Suggestion('Why is it here?'));
-        agent.add(new Suggestion('How long is the data kept?'));
-        agent.add(new Suggestion('Where is the data stored?'));
-        agent.add(new Suggestion('Who has access to the data?'));
-        agent.add(new Suggestion('How is the data protected?'));
-        agent.add(new Suggestion('How can I give feedback about this?'));
-      })
-      .catch(reason => {
-        console.log('ERROR: ', reason);
+        return getQuestionsToAsk(agent);
       });
+  }
 
-
-    // agent.add(`Get details about componentId: ${originalContext.componentId} at placeId: ${originalContext.placeId}`);
+  const learnAboutPlace = agent => {
+    console.log('learnABoutPlace()...');
+    const placeId = getPlaceId(agent);
+    return base('Places').find(placeId)
+      .then(place => {
+        const name = place.get('Name');
+        agent.add(`Welcome to ${name}. I can help you learn about this place and the kind of systems we use here to help people.`);
+        return getQuestionsToAsk(agent);
+      });
   }
 
   function getDescription(agent) {
     console.log('getDescription()...');
     const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(component => {
         const description = component.get('Description');
         agent.add(description);
-		return getTheParts(agent);
-      })
-      .catch(reason => {
-        console.log('ERROR: ', reason);
+        return getTheParts(agent);
       });
   }
 
   function getWhy(agent) {
     console.log('getWhy()...');
     const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(component => {
         const info = component.get('Purpose');
@@ -128,9 +141,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         const purposeStr = names.length > 1 ? 'purposes' : 'purpose';
         const areIsStr = names.length > 1 ? 'are' : 'is';
         agent.add(`The ${purposeStr} of this component ${areIsStr} ${names.join(',')}`);
-      })
-      .catch(reason => {
-        console.log('ERROR: ', reason);
       });
   }
   const getTimeRetained = () => {
@@ -146,6 +156,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   const getStorageData = (dataType) => {
     console.log('getStorageData() type = ', dataType);
     const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(component => {
         const info = component.get('Storage');
@@ -164,10 +175,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
             return storage.get('Description');
           }
         }).filter(name => name);
-        agent.add(`The data is ${names.join(',').toLowerCase()}.`);
-      })
-      .catch(reason => {
-        console.log('ERROR: ', reason);
+        agent.add(names.join(' '));
       });
   };
 
@@ -176,6 +184,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     const dataType = 'Description';
     const infoType = 'Access';
     const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(component => {
         const info = component.get(infoType);
@@ -189,22 +198,19 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         const items = info.map(item => item.get(dataType))
           .filter(item => item);
         agent.add(items.join(' '));
-      })
-      .catch(reason => {
-        console.log('ERROR: ', reason);
       });
-  }
+  };
 
-  const getAccountability = () => {
+  const getAccountability = agent => {
     console.log('getAccountability()...');
     const dataType = 'name';
     const infoType = 'Accountability';
-    const originalContext = agent.originalRequest.payload;
+    const originalContext = getPayload(agent);
     // ** NO CONTEXT SWTICHING ABILITY FOR PLACE ATM **
     const {
-      placeId,
       componentId
     } = originalContext;
+    const placeId = getPlaceId(agent);
     return base('Places').find(placeId)
       .then(place => {
         const accountabilityId = place.get('Accountable Entity')[0];
@@ -228,9 +234,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
           buttonText: 'Visit',
           buttonUrl: organizationUrl
         }));
-      })
-      .catch(reason => {
-        console.log('ERROR: ', reason);
       });
   };
   const capitalizeString = s => {
@@ -376,8 +379,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       .then(records => {
         console.log('response 1 recieved...', records);
         if (!records.length) {
-          agent.add('I am not able to provide an answer to that question currently. I will take a note and look for the future.');
-          throw new Error(`What Is intent with parameters ${parameters} could not resolve any information.`);
+          agent.add(`I cannot seem to find any information about the ${item} in my records.`);
         }
         console.log('found records...');
         // record will be an id in the event of a join
@@ -404,16 +406,15 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         }
         agent.add(message);
         // is it a system and does it have subsystems
-        const childComponentIds = record.get('Child components');
-        if (primaryEntity === 'system' && childComponentIds && childComponentIds.length > 0) return getChildComponents(record);
+        // const childComponentIds = record.get('Child components');
+        // if (primaryEntity === 'system' && childComponentIds && childComponentIds.length > 0) return getChildComponents(record);
         return;
       })
       .then(records => {
         if (!records || !records.length) return;
         agent.add('You can learn more about the components that make up the system.');
         records.forEach(component => agent.add(new Suggestion(component.get('Name'))));
-      })
-      .catch(console.error);
+      });
   };
   const addAndToLastElement = list => {
     if (list.length > 1) {
@@ -424,6 +425,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   const getDataProcessList = () => {
     console.log('getDataProcessList()...');
     const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(component => {
         const info = component.get('Data Process');
@@ -439,14 +441,12 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         agent.add(`The data is handled using ${list.join(', ')} data processes.`);
         // add suggestion chips
         names.forEach(name => agent.add(new Suggestion(`What does ${name} mean?`)));
-      })
-      .catch(reason => {
-        console.log('ERROR: ', reason);
       });
   };
   const getDataTypes = () => {
     console.log('getDataTypesList()...');
     const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(component => {
         const info = component.get('Data Type');
@@ -464,18 +464,11 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         agent.add(`The data collected is stored as ${list.join(', ')}.`);
         // add suggestion chips
         names.forEach(name => agent.add(new Suggestion(`What does ${name} mean?`)));
-      })
-      .catch(reason => {
-        console.log('ERROR: ', reason);
       });
   };
   const whereAmI = () => {
     console.log('whereAmI()...');
-    const originalContext = agent.originalRequest.payload;
-    if (!originalContext) throw new Error('User requests location but original context was not passed.');
-    const {
-      placeId
-    } = originalContext;
+    const placeId = getPlaceId(agent);
     return base('Places').find(placeId)
       .then(place => {
         if (!place) throw new Error(`where am I intent was passed placeId: ${placeId} but no place data could be loaded.`);
@@ -485,44 +478,260 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
   const getTheParts = agent => {
     console.log('getTheParts()...');
-    const componentId = getComponentId(agent);
+    const componentId = getSystems(agent);
     // does it have child components? return a list of those
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(getChildComponents)
       .then(children => {
         if (!children || !children.length) return agent.add('It is a simple technology it does not have any child components or systems to describe.');
         const names = children.map(child => child.get('Name')).filter(name => name);
-        agent.add(`This technology has ${children.length} sub-components. You can learn more about them.`);
+        const list = addAndToLastElement([...names]).join(', ');
+        agent.add(`This technology has ${children.length} sub-components: ${list} You can learn more about them by asking about them by name.`);
         // add suggestion chips
         names.forEach(name => agent.add(new Suggestion(name)));
-      })
-      .catch(console.error);
+      });
   };
 
   const getTargetOutcome = () => {
     console.log('getTargetOutcome()...');
     const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(component => {
         if (!component) throw new Error(`A component with id: ${componentId} could not be found.`);
         const targetOutcome = component.get('Target Outcome');
         if (!targetOutcome) return agent.add('There is currently no target benefit for this component');
         return agent.add(`${targetOutcome}`);
-      })
-      .catch(console.error);
+      });
   };
 
   const getMeasuredOutcome = () => {
     console.log('getMeasuredOutcome()...');
     const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
       .then(component => {
         if (!component) throw new Error(`A component with id: ${componentId} could not be found.`);
         const targetOutcome = component.get('Measured Outcome');
         if (!targetOutcome) return agent.add('There is currently no measured outcome listed for this component');
         return agent.add(`It has achieved ${targetOutcome}`);
+      });
+  };
+
+  const getSystems = agent => {
+    console.log('getSystems()...');
+    const placeId = getPlaceId(agent);
+    const entityMap = { base: 'Components' };
+    return filterFirstPageByFormula('', entityMap)
+      .then(components => {
+        if (!components || !components.length) {
+          agent.add(`I couldn't find any technologies listed for this place.`);
+        } else {
+          const systems = components.filter(component => {
+            const places = component.get('Place') || [];
+            const hasPlace = places.includes(placeId);
+            const isSystem = Boolean(component.get('System'));
+            return hasPlace && isSystem;
+          })
+            .map(component => component.get('Name'));
+          if (!systems.length) return agent.add('This place does not have any systems.');
+          const list = addAndToLastElement([...systems]);
+          const message = list.length > 1 ? `This place has several systems: ${systems.join(', ')}` : `This place has a ${systems} system.`;
+          agent.add(message);
+          systems.forEach(name => agent.add(new Suggestion(name)));
+        }
+      });
+  };
+
+  const collectsPersonalInfo = (id) => {
+    let baseComponent;
+    const cId = id || getComponentId(agent);
+    return base('Components').find(cId)
+      .then(component => {
+        if (!component) throw new Error(`Could not find base component with id: ${cId}`);
+        baseComponent = component;
+        return getChildComponents(component);
       })
-      .catch(console.error);
+      .then(childComponents => {
+        const components = Array.isArray(childComponents) ? childComponents : [];
+        components.push(baseComponent);
+        const dataTypes = components.map(c => c.get('Data Type'));
+        var merged = [].concat.apply([], dataTypes).filter(m => m);
+        return Promise.all(merged.map(id => base('Data Type').find(id)));
+      })
+      .then(records => {
+        const isPersonal = records.filter(r => r.get('Name') === 'Personal Information');
+        if (isPersonal.length) {
+          return isPersonal;
+        }
+        return null;
+      });
+  };
+
+  const getPlaceComponents = placeId => {
+    return new Promise((resolve, reject) => {
+      let components = [];
+      base('Components').select()
+        .eachPage((records, fetchNextPage) => {
+          const filtered = records.filter(r => {
+            const places = r.get('Place');
+            if (!places || !places.length) return false;
+            return r.get('Place').includes(placeId);
+          });
+          components = [...filtered];
+          fetchNextPage();
+        }, err => {
+          if (err) {
+            console.error(err);
+            reject(err);
+            return;
+          }
+          resolve(components);
+        });
+    });
+  };
+
+  const getDataTypeByName = name => {
+    let components;
+    return new Promise((resolve, reject) => {
+      base('Components').select()
+        .eachPage((records, fetchNextPage) => {
+          components = [...records];
+          fetchNextPage();
+        }, err => {
+          if (err) {
+            console.error(err);
+            reject(err);
+            return;
+          }
+          resolve(components);
+        });
+    });
+  };
+
+  const placeComponentsCollectsPersonalInfo = placeId => {
+    return getPlaceComponents(placeId)
+      .then(components => Promise.all(components.map(component => collectsPersonalInfo(component.get('ID')))))
+      .then(results => results.some(r => r));
+  };
+
+  const getPersonallyIdentifiableComponents = (placeId, componentId) => {
+    let dataTypeId;
+    const formula = '{Name} = "Personal Information"';
+    return filterFirstPageByFormula(formula, { base: 'Data Type' })
+      .then(dataType => dataType[0].get('ID'))
+      .then(id => {
+        dataTypeId = id;
+        return getPlaceComponents(placeId);
+      })
+      .then(components => components.filter(c => {
+        const types = c.get('Data Type') || [];
+        return componentId ? c.get('ID') === componentId && types.includes(dataTypeId) : types.includes(dataTypeId);
+      }));
+  };
+
+  const getPlaceCollectsPersonalData = agent => {
+    console.log('getPlaceCollectsPersonalData()...');
+    const originalContext = getPayload(agent);
+    if (!originalContext) throw new Error('User requests location but original context was not passed.');
+    const placeId = getPlaceId(agent);
+    return getPersonallyIdentifiableComponents(placeId) // boston mall
+      .then(components => {
+        if (!components || !components.length) return agent.add('This place does not collect personal data.');
+        const names = components.map(c => c.get('Name'));
+        agent.add(`Yes it looks like the following ${names.length === 1 ? 'technology is ' : 'technologies are '} collecting personal data: `);
+        agent.add(names.join(', '));
+        agent.add(`You can learn more about ${names.length === 1 ? 'it ' : 'them '} by asking me for a specific description.`);
+        names.forEach(name => agent.add(new Suggestion(name)));
+      });
+  };
+
+  const getComponentCollectsPersonalData = agent => {
+    console.log('getComponentCollectsPersonalData()...');
+    const originalContext = getPayload(agent);
+    if (!originalContext) throw new Error('User requests location but original context was not passed.');
+    const placeId = getPlaceId(agent);
+    const componentId = getComponentId(agent);
+    return getPersonallyIdentifiableComponents(placeId)
+      .then(components => {
+        if (!components || !components.length) return agent.add('There do not appear to be any components which collect personal information.');
+        const filtered = components.filter(component => component.get('ID') === componentId);
+        if (filtered && filtered.length) return agent.add('This component collects personal information.');
+        return agent.add('This component does not collect personal information.');
+      });
+  };
+
+  const getDataTypeNames = component => {
+    const componentId = component.get('ID');
+    return base('Components').find(componentId)
+      .then(component => {
+        const info = component.get('Data Type');
+        if (!info) {
+          throw new Error(`Data Process info was requested for a component: ${componentId} that does not have any defined.`);
+        }
+        return Promise.all(info.map(id => base('Data Process').find(id)));
+      })
+      .then(info => info.map(dataProcess => dataProcess.get('Name')).filter(name => name));
+  };
+
+  const storesImageData = component => {
+    const PIXEL_BASED_IMAGE = 'Pixel-based Image';
+    return getDataTypeNames(component)
+      .then(dataTypes => {
+        if (!dataTypes || !dataTypes.length) return false;
+        return dataTypes.includes(PIXEL_BASED_IMAGE);
+      });
+  };
+
+  const getCollectsImageData = agent => {
+    console.log('getCollectsImageData()...');
+    const originalContext = getPayload(agent);
+    if (!originalContext) throw new Error('User requests location but original context was not passed.');
+    const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
+    return base('Components').find(componentId)
+      .then(storesImageData)
+      .then(doesStoreImageData => {
+        if (doesStoreImageData) return agent.add('It does collect image data.');
+        agent.add('It does not collect image data.');
+      });
+  };
+
+  const getQuestionsToAsk = agent => {
+    console.log('getQuestionsToAsk()...');
+    const originalContext = getPayload(agent);
+    if (!originalContext) throw new Error('User requests location but original context was not passed.');
+    const componentId = getComponentId(agent);
+    if (!componentId) {
+      agent.add('You can ask questions to learn about the technologies that are in use here. For example you can ask to be told about a technology specifically or you can ask questions like: ');
+      agent.add('Where am I?');
+      agent.add('What systems are you using?');
+      agent.add('What kind of data is being collected?');
+      agent.add('What will you use the information for?');
+      agent.add('How long do you keep the data?');
+      agent.add('Where is the info stored?');
+      agent.add('Do you track personal data?');
+      agent.add('Is it taking pictures of me?');
+      agent.add('Who can see the data?');
+      agent.add('How is my information protected?');
+    } else {
+      agent.add('You can learn more about this component by asking questions like:');
+      agent.add('What kind of data is being collected?');
+      agent.add('What will you use the information for?');
+      agent.add('How long do you keep the data?');
+      agent.add('Where is the info stored?');
+      agent.add('Do you track personal data?');
+      agent.add('Is it taking pictures of me?');
+      agent.add('Who can see the data?');
+      agent.add('How is my information protected?');
+    }
+
+  };
+
+  const noComponentFallback = agent => {
+    agent.add('The way that works varies from system to system. However you can ask about each system individually.');
+    return getSystems(agent);
   };
 
   function fallback(agent) {
@@ -564,6 +773,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('learn about component', learnAboutComponent);
+  intentMap.set('learn about place', learnAboutPlace);
   intentMap.set('get description', getDescription);
   intentMap.set('get why', getWhy);
   intentMap.set('get time retained', getTimeRetained);
@@ -577,8 +787,11 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   intentMap.set('get the parts', getTheParts);
   intentMap.set('get target outcome', getTargetOutcome);
   intentMap.set('get measured outcome', getMeasuredOutcome);
-
-  //get child components
+  intentMap.set('get systems', getSystems);
+  intentMap.set('get place collects personal data', getPlaceCollectsPersonalData);
+  intentMap.set('get component collects personal data', getComponentCollectsPersonalData);
+  intentMap.set('get collects image data', getCollectsImageData);
+  intentMap.set('get questions to ask', getQuestionsToAsk);
 
   // intentMap.set('your intent name here', yourFunctionHandler);
   // intentMap.set('your intent name here', googleAssistantHandler);
