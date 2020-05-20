@@ -16,6 +16,25 @@ const base = new Airtable({
 
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
 
+/*
+ * Map entity type string to constants
+ */
+const ENTITIES = {
+  PLACE_ATTRACTION: 'place-attraction',
+  LOCATION: 'location',
+  COMPONENT: 'component',
+  SYSTEM: 'system',
+  PURPOSE: 'Purpose',
+  ADDRESS: 'address',
+  TECHNOLOGY_TYPE: 'technology-type',
+  DATA_PROCESS: 'data-process',
+  DATA_TYPE: 'data-type'
+};
+
+/*
+ * Store default/fallback IDs for use in requests. This is also useful while testing in the DF console.
+ * This is b/c the base context IDs are passed in from the client host HTML pages
+ */
 const DEFAULTS = {
   placeId: 'recHJJkuqk0AYjHa9'
 };
@@ -27,13 +46,22 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   });
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
   console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
+
+  /*
+   * Utility functions
+   * These general purpose methods perform parsing tasks on incoming Airtable data
+   * or manipulate DF state & context.
+   */
   const getChildComponents = component => {
     const children = component.get('Child components');
     if (!children || !children.length) return children;
     return Promise.all(children.map(id => base('Components').find(id)));
   };
 
-  // payload may stored in 2 locations depending on which client the request is coming from
+  /*
+  * Store default/fallback IDs for use in requests. This is also useful while testing in the DF console.
+  * This is b/c the base context IDs are passed in from the client host HTML pages
+  */
   const getPayload = agent => agent.originalRequest.payload.userId ? JSON.parse(agent.originalRequest.payload.userId) : agent.originalRequest.payload;
 
   function welcome(agent) {
@@ -53,211 +81,45 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
    * If neither is available return null
    */
   const getComponentId = agent => {
-    console.log('=======> getComponentId()...');
     const componentContext = agent.getContext('component-context');
     const incomingComponentId = componentContext ? componentContext.parameters.componentId : null;
     const originalContext = getPayload(agent);
-    console.log('=======> componentContext = ', JSON.stringify(componentContext, null, 2));
-    console.log('=======> incomingComponentId = ', JSON.stringify(incomingComponentId, null, 2));
-    console.log('=======> originalContext = ', JSON.stringify(originalContext, null, 2));
-    const {
-      componentId: originalComponentId
-    } = originalContext;
-    console.log('=======> originalComponentId = ', JSON.stringify(originalComponentId, null, 2));
-    const usingId = incomingComponentId ? 'Incoming Id' : 'Original Request Id';
-    console.log('=======> Which id are we using?: ', usingId);
-    const id = incomingComponentId || originalComponentId;
-    console.log('=======> id: ', id);
-    return id;
+    const { componentId: originalComponentId } = originalContext;
+    return incomingComponentId || originalComponentId;
   };
 
+  /*
+   * Get the placeId to use as the place context either from the
+   * original passed context or use the default fallback
+   */
   const getPlaceId = agent => {
     const originalContext = getPayload(agent);
-    const {
-      placeId
-    } = originalContext;
+    const { placeId } = originalContext;
     return placeId || DEFAULTS.placeId;
   };
 
-  function learnAboutComponent(agent) {
-    const originalContext = getPayload(agent);
-    const {
-      componentId
-    } = originalContext;
-    if (!componentId) return noComponentFallback(agent);
-    const placeId = getPlaceId(agent);
-    console.log('Original Context: ', JSON.stringify(originalContext));
-    agent.add('Let me take a look for the information about this component.');
-    return base('Components').find(componentId)
-      .then(component => {
-        const {
-          id
-        } = component;
-        const name = component.get('Name');
-        agent.add(`This is a ${name}.`);
-        return base('Places').find(placeId);
-      })
-      .then(place => {
-        const name = place.get('Name');
-        agent.add(`It's installed at ${name}. I can also tell you more about it and how the data is being handled.`);
-        return getQuestionsToAsk(agent);
-      });
-  }
-
-  const learnAboutPlace = agent => {
-    console.log('learnABoutPlace()...');
-    const placeId = getPlaceId(agent);
-    return base('Places').find(placeId)
-      .then(place => {
-        const name = place.get('Name');
-        agent.add(`Welcome to ${name}. I can help you learn about this place and the kind of systems we use here to help people.`);
-        return getQuestionsToAsk(agent);
-      });
-  }
-
-  function getDescription(agent) {
-    console.log('getDescription()...');
-    const componentId = getComponentId(agent);
-    if (!componentId) return noComponentFallback(agent);
-    return base('Components').find(componentId)
-      .then(component => {
-        const description = component.get('Description');
-        agent.add(description);
-        return getTheParts(agent);
-      });
-  }
-
-  function getWhy(agent) {
-    console.log('getWhy()...');
-    const componentId = getComponentId(agent);
-    if (!componentId) return noComponentFallback(agent);
-    return base('Components').find(componentId)
-      .then(component => {
-        const info = component.get('Purpose');
-        return Promise.all(info.map(id => base('Purpose').find(id)));
-      })
-      .then(purposes => {
-        const names = purposes.map(purpose => purpose.get('Name'));
-        const purposeStr = names.length > 1 ? 'purposes' : 'purpose';
-        const areIsStr = names.length > 1 ? 'are' : 'is';
-        agent.add(`The ${purposeStr} of this component ${areIsStr} ${names.join(',')}`);
-      });
-  }
-  const getTimeRetained = () => {
-    console.log('getTimeRetained()...');
-    return getStorageData('retention');
-  };
-
-  const getStorage = () => {
-    console.log('getStorage()...');
-    return getStorageData('storage');
-  };
-
-  const getStorageData = (dataType) => {
-    console.log('getStorageData() type = ', dataType);
-    const componentId = getComponentId(agent);
-    if (!componentId) return noComponentFallback(agent);
-    return base('Components').find(componentId)
-      .then(component => {
-        const info = component.get('Storage');
-        if (!info) {
-          agent.add(`This component doesn't appear to have storage information to share.`);
-          throw new Error(`Storage info was requested for a component: ${componentId} that does not have any defined.`);
-        }
-        return Promise.all(info.map(id => base('Storage').find(id)));
-      })
-      .then(storageInfo => {
-        //console.log(storageInfo);
-        const names = storageInfo.map(storage => {
-          console.log(`Storage Type: ${storage.get(dataType)}`);
-          console.log(`Storage Name: ${storage.get('Name')}`);
-          if (storage.get('PropertyType') === dataType) {
-            return storage.get('Description');
-          }
-        }).filter(name => name);
-        agent.add(names.join(' '));
-      });
-  };
-
-  const getAccess = agent => {
-    console.log('getAccess()...');
-    const dataType = 'Description';
-    const infoType = 'Access';
-    const componentId = getComponentId(agent);
-    if (!componentId) return noComponentFallback(agent);
-    return base('Components').find(componentId)
-      .then(component => {
-        const info = component.get(infoType);
-        if (!info) {
-          agent.add(`This component doesn't appear to have ${infoType} information to share.`);
-          throw new Error(`${infoType} info was requested for a component: ${componentId} that does not have any defined.`);
-        }
-        return Promise.all(info.map(id => base(infoType).find(id)));
-      })
-      .then(info => {
-        const items = info.map(item => item.get(dataType))
-          .filter(item => item);
-        agent.add(items.join(' '));
-      });
-  };
-
-  const getAccountability = agent => {
-    console.log('getAccountability()...');
-    const dataType = 'name';
-    const infoType = 'Accountability';
-    const originalContext = getPayload(agent);
-    // ** NO CONTEXT SWTICHING ABILITY FOR PLACE ATM **
-    const {
-      componentId
-    } = originalContext;
-    const placeId = getPlaceId(agent);
-    return base('Places').find(placeId)
-      .then(place => {
-        const accountabilityId = place.get('Accountable Entity')[0];
-        if (!accountabilityId) {
-          agent.add(`This component doesn't appear to have ${infoType} information to share.`);
-          throw new Error(`${infoType} info was requested for a component: ${componentId} that does not have any defined.`);
-        }
-        return base('Accountability').find(accountabilityId);
-      })
-      .then(accountableEntity => {
-        const name = accountableEntity.get('Name');
-        const logoUrl = accountableEntity.get('Logo')[0].thumbnails.large.url;
-        const organizationUrl = accountableEntity.get('Accountable Organization URL');
-        const description = accountableEntity.get('Description');
-
-        agent.add(`${name} is accountable for it.`);
-        agent.add(new Card({
-          title: name,
-          imageUrl: logoUrl,
-          text: description,
-          buttonText: 'Visit',
-          buttonUrl: organizationUrl
-        }));
-      });
-  };
   const capitalizeString = s => {
     return s && s[0].toUpperCase() + s.slice(1);
   };
+
   const titleCase = str => {
     if (str != '') return str.replace(/(^[a-z])|(\s+[a-z])/g, txt => txt.toUpperCase());
     return '';
   };
-  const ENTITIES = {
-    PLACE_ATTRACTION: 'place-attraction',
-    LOCATION: 'location',
-    COMPONENT: 'component',
-    SYSTEM: 'system',
-    PURPOSE: 'Purpose',
-    ADDRESS: 'address',
-    TECHNOLOGY_TYPE: 'technology-type',
-    DATA_PROCESS: 'data-process',
-    DATA_TYPE: 'data-type'
+
+  const addAndToLastElement = list => {
+    if (list.length > 1) {
+      list[list.length - 1] = `and ${list[list.length - 1]}`;
+    }
+    return list;
   };
 
-  // inpsect parameters to decide which entity type the user is talking about
-  // organized in terms of prirotiy for simplicties sake (we are not trying to
-  // handle relationships between entities)
+  /*
+   * Return the entity type to be used as the main entity for a user request.
+   * This is the best guess of the type of thing the user is mainly asking about.
+   * The types are organized in terms of a rough semantic priority as it is
+   * more than possible that multiple entity types will be retrieved.
+   */
   const getPrimaryEntityType = (parameters) => {
     const placeattraction = parameters['place-attraction'];
     const dataprocess = parameters['data-process'];
@@ -283,6 +145,17 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     return;
   };
 
+  /*
+   * Return an object which describes a series of steps to query
+   * for a particular entity type.
+   * base: which table in the AIrtable to begin the query on
+   * property: the column we are interested in for output OR to form a join in a subsequent step
+   * identifier: This the column we use to select the row
+   * joinTable: if this is defined we take the output from the first query and then query this table
+   * joinProperty: This is the colum that becomes the eventual output of a join query
+   * prepend: allows text to be passed that prepends the result in a message that is sent to the user
+   * # there is no join identifier as queries are assumed to have a single join at maximum
+   */
   const mapEntityToInfo = (type) => {
     console.log('mapEntityToInfo ===> ', type);
     const map = {
@@ -346,6 +219,11 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     return map;
   };
 
+  /*
+   * Return a promise to query the Airtable
+   * ARG entityMap:  The entity map which can be created using the mapEntityToInfo() method or manually
+   * ARG formula: a formula used to filter the results from the Airtable (See Airtable API docs for details)
+   */
   const filterFirstPageByFormula = (formula, entityMap) => {
     return new Promise((resolve, reject) => {
       base(entityMap.base)
@@ -359,55 +237,180 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     });
   };
 
+  /*
+   * DF Intent Handlers
+   * These are mapped to specific DF intents & that map is passed to the agent
+   */
+  function learnAboutComponent(agent) {
+    const originalContext = getPayload(agent);
+    const {
+      componentId
+    } = originalContext;
+    if (!componentId) return noComponentFallback(agent);
+    const placeId = getPlaceId(agent);
+    console.log('Original Context: ', JSON.stringify(originalContext));
+    agent.add('Let me take a look for the information about this component.');
+    return base('Components').find(componentId)
+      .then(component => {
+        const {
+          id
+        } = component;
+        const name = component.get('Name');
+        agent.add(`This is a ${name}.`);
+        return base('Places').find(placeId);
+      })
+      .then(place => {
+        const name = place.get('Name');
+        agent.add(`It's installed at ${name}. I can also tell you more about it and how the data is being handled.`);
+        return getQuestionsToAsk(agent);
+      });
+  }
+
+  const learnAboutPlace = agent => {
+    const placeId = getPlaceId(agent);
+    return base('Places').find(placeId)
+      .then(place => {
+        const name = place.get('Name');
+        agent.add(`Welcome to ${name}. I can help you learn about this place and the kind of systems we use here to help people.`);
+        return getQuestionsToAsk(agent);
+      });
+  }
+
+  function getDescription(agent) {
+    const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
+    return base('Components').find(componentId)
+      .then(component => {
+        const description = component.get('Description');
+        agent.add(description);
+        return getTheParts(agent);
+      });
+  }
+
+  function getWhy(agent) {
+    const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
+    return base('Components').find(componentId)
+      .then(component => {
+        const info = component.get('Purpose');
+        return Promise.all(info.map(id => base('Purpose').find(id)));
+      })
+      .then(purposes => {
+        const names = purposes.map(purpose => purpose.get('Name'));
+        const purposeStr = names.length > 1 ? 'purposes' : 'purpose';
+        const areIsStr = names.length > 1 ? 'are' : 'is';
+        agent.add(`The ${purposeStr} of this component ${areIsStr} ${names.join(',')}`);
+      });
+  }
+  const getTimeRetained = () => getStorageData('retention');
+
+  const getStorage = () => getStorageData('storage');
+
+  const getStorageData = (dataType) => {
+    const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
+    return base('Components').find(componentId)
+      .then(component => {
+        const info = component.get('Storage');
+        if (!info) {
+          agent.add(`This component doesn't appear to have storage information to share.`);
+          throw new Error(`Storage info was requested for a component: ${componentId} that does not have any defined.`);
+        }
+        return Promise.all(info.map(id => base('Storage').find(id)));
+      })
+      .then(storageInfo => {
+        const names = storageInfo.map(storage => {
+          if (storage.get('PropertyType') === dataType) return storage.get('Description');
+        }).filter(name => name);
+        agent.add(names.join(' '));
+      });
+  };
+
+  const getAccess = agent => {
+    const dataType = 'Description';
+    const infoType = 'Access';
+    const componentId = getComponentId(agent);
+    if (!componentId) return noComponentFallback(agent);
+    return base('Components').find(componentId)
+      .then(component => {
+        const info = component.get(infoType);
+        if (!info) {
+          agent.add(`This component doesn't appear to have ${infoType} information to share.`);
+          throw new Error(`${infoType} info was requested for a component: ${componentId} that does not have any defined.`);
+        }
+        return Promise.all(info.map(id => base(infoType).find(id)));
+      })
+      .then(info => {
+        const items = info.map(item => item.get(dataType))
+          .filter(item => item);
+        agent.add(items.join(' '));
+      });
+  };
+
+  const getAccountability = agent => {
+    const dataType = 'name';
+    const infoType = 'Accountability';
+    const originalContext = getPayload(agent);
+    const {
+      componentId
+    } = originalContext;
+    const placeId = getPlaceId(agent);
+    return base('Places').find(placeId)
+      .then(place => {
+        const accountabilityId = place.get('Accountable Entity')[0];
+        if (!accountabilityId) {
+          agent.add(`This component doesn't appear to have ${infoType} information to share.`);
+          throw new Error(`${infoType} info was requested for a component: ${componentId} that does not have any defined.`);
+        }
+        return base('Accountability').find(accountabilityId);
+      })
+      .then(accountableEntity => {
+        const name = accountableEntity.get('Name');
+        const logoUrl = accountableEntity.get('Logo')[0].thumbnails.large.url;
+        const organizationUrl = accountableEntity.get('Accountable Organization URL');
+        const description = accountableEntity.get('Description');
+
+        agent.add(`${name} is accountable for it.`);
+        agent.add(new Card({
+          title: name,
+          imageUrl: logoUrl,
+          text: description,
+          buttonText: 'Visit',
+          buttonUrl: organizationUrl
+        }));
+      });
+  };
+
   // Notice that whatIs does not use componentId but instead bases it's search on entities from the params
   // Notice also that whatIs is a place where the componentId will switch to the id of the selected system or component
   const whatIs = (agent) => {
-    console.log('whatIs()...');
-    const {
-      parameters
-    } = agent;
-    console.log('parameters: ', parameters);
+    const { parameters } = agent;
     const primaryEntity = getPrimaryEntityType(parameters);
     const entityMap = mapEntityToInfo(primaryEntity);
-    console.log(`Q: What is ${parameters[primaryEntity]}? (${primaryEntity})`);
     const item = titleCase(parameters[primaryEntity]);
-    console.log('item: ', item);
     const query = `{${entityMap.identifier}} = "${item}"`;
-    console.log('entityMap: ', entityMap);
-    console.log('query: ', query);
     return filterFirstPageByFormula(query, entityMap)
       .then(records => {
-        console.log('response 1 recieved...', records);
         if (!records.length) {
           agent.add(`I cannot seem to find any information about the ${item} in my records.`);
         }
-        console.log('found records...');
         // record will be an id in the event of a join
         const record = records[0];
         // handle joins if any
         if (entityMap.joinTable) {
-          console.log('retrive Join table...');
           return base(entityMap.joinTable).find(record.get(entityMap.property)[0]);
         }
         // otherwise pass record through
-        console.log('pass record thru...');
         return record;
       })
       .then(record => {
-        console.log('got Join tbale response...');
         const answer = entityMap.joinTable ? record.get(entityMap.joinProperty) : record.get(entityMap.property);
         const message = `${entityMap.prepend} ${answer}.`;
-        console.log('agent message: ', message);
         if (primaryEntity === ENTITIES.SYSTEM || primaryEntity === ENTITIES.COMPONENT) {
-          console.log('*** Setting the context to a new component ***');
           const context = { 'name': 'component-context', 'lifespan': 5, 'parameters': { 'componentId': record.get('ID') } };
           agent.setContext(context);
-          //agent.setContext({'name': 'component-context', 'lifespan': 2, 'parameters': {'city': 'Rome'}});
         }
         agent.add(message);
-        // is it a system and does it have subsystems
-        // const childComponentIds = record.get('Child components');
-        // if (primaryEntity === 'system' && childComponentIds && childComponentIds.length > 0) return getChildComponents(record);
         return;
       })
       .then(records => {
@@ -416,12 +419,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         records.forEach(component => agent.add(new Suggestion(component.get('Name'))));
       });
   };
-  const addAndToLastElement = list => {
-    if (list.length > 1) {
-      list[list.length - 1] = `and ${list[list.length - 1]}`;
-    }
-    return list;
-  };
+
   const getDataProcessList = () => {
     console.log('getDataProcessList()...');
     const componentId = getComponentId(agent);
@@ -444,7 +442,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       });
   };
   const getDataTypes = () => {
-    console.log('getDataTypesList()...');
     const componentId = getComponentId(agent);
     if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
@@ -457,9 +454,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         return Promise.all(info.map(id => base('Data Type').find(id)));
       })
       .then(info => {
-        console.log('STEP 2 ---> ', info);
         const names = info.map(dataType => dataType.get('Name')).filter(name => name);
-        console.log('STEP 2 ---> names: ', names);
         const list = addAndToLastElement([...names]);
         agent.add(`The data collected is stored as ${list.join(', ')}.`);
         // add suggestion chips
@@ -467,7 +462,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       });
   };
   const whereAmI = () => {
-    console.log('whereAmI()...');
     const placeId = getPlaceId(agent);
     return base('Places').find(placeId)
       .then(place => {
@@ -477,7 +471,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getTheParts = agent => {
-    console.log('getTheParts()...');
     const componentId = getSystems(agent);
     // does it have child components? return a list of those
     if (!componentId) return noComponentFallback(agent);
@@ -494,7 +487,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getTargetOutcome = () => {
-    console.log('getTargetOutcome()...');
     const componentId = getComponentId(agent);
     if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
@@ -507,7 +499,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getMeasuredOutcome = () => {
-    console.log('getMeasuredOutcome()...');
     const componentId = getComponentId(agent);
     if (!componentId) return noComponentFallback(agent);
     return base('Components').find(componentId)
@@ -520,7 +511,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getSystems = agent => {
-    console.log('getSystems()...');
     const placeId = getPlaceId(agent);
     const entityMap = { base: 'Components' };
     return filterFirstPageByFormula('', entityMap)
@@ -632,7 +622,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getPlaceCollectsPersonalData = agent => {
-    console.log('getPlaceCollectsPersonalData()...');
     const originalContext = getPayload(agent);
     if (!originalContext) throw new Error('User requests location but original context was not passed.');
     const placeId = getPlaceId(agent);
@@ -648,7 +637,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getComponentCollectsPersonalData = agent => {
-    console.log('getComponentCollectsPersonalData()...');
     const originalContext = getPayload(agent);
     if (!originalContext) throw new Error('User requests location but original context was not passed.');
     const placeId = getPlaceId(agent);
@@ -685,7 +673,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getCollectsImageData = agent => {
-    console.log('getCollectsImageData()...');
     const originalContext = getPayload(agent);
     if (!originalContext) throw new Error('User requests location but original context was not passed.');
     const componentId = getComponentId(agent);
@@ -699,7 +686,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getQuestionsToAsk = agent => {
-    console.log('getQuestionsToAsk()...');
     const originalContext = getPayload(agent);
     if (!originalContext) throw new Error('User requests location but original context was not passed.');
     const componentId = getComponentId(agent);
@@ -739,7 +725,38 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     agent.add(`I'm sorry, can you try again?`);
   }
 
-  // // Uncomment and edit to make your own intent handler
+  /*
+   * Map the DF intent to the Handling Method
+   */
+  let intentMap = new Map();
+  intentMap.set('Default Welcome Intent', welcome);
+  intentMap.set('Default Fallback Intent', fallback);
+  intentMap.set('learn about component', learnAboutComponent);
+  intentMap.set('learn about place', learnAboutPlace);
+  intentMap.set('get description', getDescription);
+  intentMap.set('get why', getWhy);
+  intentMap.set('get time retained', getTimeRetained);
+  intentMap.set('get storage', getStorage);
+  intentMap.set('get access', getAccess);
+  intentMap.set('get accountability', getAccountability);
+  intentMap.set('what is', whatIs);
+  intentMap.set('get data process list', getDataProcessList);
+  intentMap.set('get data types', getDataTypes);
+  intentMap.set('where am I', whereAmI);
+  intentMap.set('get the parts', getTheParts);
+  intentMap.set('get target outcome', getTargetOutcome);
+  intentMap.set('get measured outcome', getMeasuredOutcome);
+  intentMap.set('get systems', getSystems);
+  intentMap.set('get place collects personal data', getPlaceCollectsPersonalData);
+  intentMap.set('get component collects personal data', getComponentCollectsPersonalData);
+  intentMap.set('get collects image data', getCollectsImageData);
+  intentMap.set('get questions to ask', getQuestionsToAsk);
+
+  // pass intent map to agent
+  agent.handleRequest(intentMap);
+});
+
+// // Uncomment and edit to make your own intent handler
   // // uncomment `intentMap.set('your intent name here', yourFunctionHandler);`
   // // below to get this function to be run when a Dialogflow intent is matched
   // function yourFunctionHandler(agent) {
@@ -767,33 +784,3 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   // }
   // // See https://github.com/dialogflow/fulfillment-actions-library-nodejs
   // // for a complete Dialogflow fulfillment library Actions on Google client library v2 integration sample
-
-  // Run the proper function handler based on the matched Dialogflow intent name
-  let intentMap = new Map();
-  intentMap.set('Default Welcome Intent', welcome);
-  intentMap.set('Default Fallback Intent', fallback);
-  intentMap.set('learn about component', learnAboutComponent);
-  intentMap.set('learn about place', learnAboutPlace);
-  intentMap.set('get description', getDescription);
-  intentMap.set('get why', getWhy);
-  intentMap.set('get time retained', getTimeRetained);
-  intentMap.set('get storage', getStorage);
-  intentMap.set('get access', getAccess);
-  intentMap.set('get accountability', getAccountability);
-  intentMap.set('what is', whatIs);
-  intentMap.set('get data process list', getDataProcessList);
-  intentMap.set('get data types', getDataTypes);
-  intentMap.set('where am I', whereAmI);
-  intentMap.set('get the parts', getTheParts);
-  intentMap.set('get target outcome', getTargetOutcome);
-  intentMap.set('get measured outcome', getMeasuredOutcome);
-  intentMap.set('get systems', getSystems);
-  intentMap.set('get place collects personal data', getPlaceCollectsPersonalData);
-  intentMap.set('get component collects personal data', getComponentCollectsPersonalData);
-  intentMap.set('get collects image data', getCollectsImageData);
-  intentMap.set('get questions to ask', getQuestionsToAsk);
-
-  // intentMap.set('your intent name here', yourFunctionHandler);
-  // intentMap.set('your intent name here', googleAssistantHandler);
-  agent.handleRequest(intentMap);
-});
