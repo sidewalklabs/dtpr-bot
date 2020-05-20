@@ -69,7 +69,7 @@ const getTable = tableName => {
 /*
  * This method is an async fire & forget
  * It runs at deploy time.
- * It fetches copy of the Airtable API data & stores it locally.
+ * It fetches a copy of the Airtable API data & stores it locally.
  */
 getAirtableData();
 
