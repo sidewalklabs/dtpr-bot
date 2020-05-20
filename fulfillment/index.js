@@ -333,7 +333,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         agent.add(`Welcome to ${name}. I can help you learn about this place and the kind of systems we use here to help people.`);
         return getQuestionsToAsk(agent);
       });
-  }
+  };
 
   function getDescription(agent) {
     const componentId = getComponentId(agent);
