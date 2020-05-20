@@ -10,11 +10,68 @@ const {
   Payload
 } = require('dialogflow-fulfillment');
 const Airtable = require('airtable');
-const base = new Airtable({
-  apiKey: 'keyZsWLtuGKax2Dro'
-}).base('appe5T5foKvONA32l');
+const apiKey = 'keyZsWLtuGKax2Dro'; // <-------- AIRTABLE API KEY
+const baseId = 'appe5T5foKvONA32l'; // <-------- AIRTABLE BASE ID
+const base = new Airtable({ apiKey }).base(baseId);
 
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
+
+/*
+ * Buffer a copy of Airtable Data to avoid timeouts on Airtable API requests
+ */
+
+let AIRTABLE_DATA = {};
+
+const TABLES = [
+  'Places',
+  'Components',
+  'Accountability',
+  'Purpose',
+  'Technology Type',
+  'Data Type',
+  'Data Process',
+  'Access',
+  'Storage',
+  'Connections'
+];
+
+const getTable = tableName => {
+  let arr = [];
+  return new Promise((resolve, reject) => {
+     base(tableName).select()
+         .eachPage((records, fetchNextPage) => {
+           arr = [...records];
+           fetchNextPage();
+         }, err => {
+           if (err) {
+             console.error(err);
+             reject(err);
+             return;
+           }
+           resolve(arr);
+         });
+     });
+ };
+
+ const getAirtableData = async () => {
+  console.log('===============> getAirtableData()...');
+  try {
+    const allArrays = await Promise.all(TABLES.map(name => getTable(name)));
+    const output = {};
+    allArrays.forEach((arr, idx) => output[TABLES[idx]] = arr);
+    AIRTABLE_DATA = output;
+    console.log('===============> *** AirtableData retrieved sucessfully ***');
+  } catch (reason) {
+    console.error('===============> *** There was an error preloading the Airtable API Data. *** Reason: ', reason);
+  }
+};
+
+/*
+ * This method is an async fire & forget
+ * It runs at deploy time.
+ * It fetches copy of the Airtable API data & stores it locally.
+ */
+getAirtableData();
 
 /*
  * Map entity type string to constants
@@ -65,6 +122,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   const getPayload = agent => agent.originalRequest.payload.userId ? JSON.parse(agent.originalRequest.payload.userId) : agent.originalRequest.payload;
 
   function welcome(agent) {
+    console.log('WELCOME');
+    console.log('===============> ', AIRTABLE_DATA.Places[0].get('ID'));
     agent.add('Hi I can provide information to you about technology is being used in building and spaces. What place do you want to talk about?');
     const payload = getPayload(agent);
     const { startingIntent } = payload;
