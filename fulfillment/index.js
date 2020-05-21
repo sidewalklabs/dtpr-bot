@@ -12,7 +12,7 @@ const {
 const Airtable = require('airtable');
 const apiKey = 'keyZsWLtuGKax2Dro'; // <-------- AIRTABLE API KEY
 const baseId = 'appe5T5foKvONA32l'; // <-------- AIRTABLE BASE ID
-const base = new Airtable({ apiKey }).base(baseId);
+const airtableBase = new Airtable({ apiKey }).base(baseId);
 
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
 
@@ -20,8 +20,54 @@ process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
  * Buffer a copy of Airtable Data to avoid timeouts on Airtable API requests
  */
 
+const USE_LIVE_AIRTABLE_API_DATA = false;
+
+const isValidTable = tableName => TABLES.includes(tableName);
+
+/*
+ * base sits as facade in front of the Airtable API base method.
+ * In the case where the cached API Data is used the base method
+ * operates on a cache of stored JSON data.
+ */
+const base = tableName => {
+  if (USE_LIVE_AIRTABLE_API_DATA) return airtableBase(tableName);
+  if (!isValidTable(tableName)) throw new Error('Base must be intialized with a valid table name such as: ', TABLES.join(', '));
+  return {
+    find: id => {
+      if (!id) return Promise.resolve(AIRTABLE_DATA[tableName]);
+      return Promise.resolve(AIRTABLE_DATA[tableName].find(record => record.get('ID') === id));
+    }
+  };
+};
+
+/*
+ * Sits as facade in front of Airtable API select functionality
+ * In the case where the cached API Data is to be used the
+ * the select method hits and filters the local JSON store.
+ * ARGS tableName name of the table to look at
+ * ARGS filter An object with a props name & value to filter results
+ */
+const select = (tableName, filter) => {
+  return new Promise(async (resolve, reject) => {
+    if (!isValidTable(tableName)) return reject('Base must be intialized with a valid table name such as: ', TABLES.join(', '));
+    if (filter && (!filter.name || !filter.value)) return reject('If a filter object is provided it must define name & value properties as strings.');
+    let all;
+    try {
+      all = await getTable(tableName);
+    } catch (reason) {
+      return reject(reason);
+    }
+    if (!filter) return resolve(all);
+    return resolve(all.filter(record => record.get(filter.name) === filter.value).filter(r => r));
+  });
+};
+
 let AIRTABLE_DATA = {};
 
+/*
+ * All valid table names for the DTPR
+ * Used for downloading the cache & for validating queries
+ */
 const TABLES = [
   'Places',
   'Components',
@@ -35,22 +81,25 @@ const TABLES = [
   'Connections'
 ];
 
+/*
+ * Methods used for downloading the Airtable API Data
+ */
 const getTable = tableName => {
   let arr = [];
   return new Promise((resolve, reject) => {
-     base(tableName).select()
-         .eachPage((records, fetchNextPage) => {
-           arr = [...records];
-           fetchNextPage();
-         }, err => {
-           if (err) {
-             console.error(err);
-             reject(err);
-             return;
-           }
-           resolve(arr);
-         });
-     });
+    airtableBase(tableName).select()
+      .eachPage((records, fetchNextPage) => {
+        arr = [...records];
+        fetchNextPage();
+      }, err => {
+        if (err) {
+          console.error(err);
+          reject(err);
+          return;
+        }
+        resolve(arr);
+      });
+  });
  };
 
  const getAirtableData = async () => {
@@ -60,8 +109,8 @@ const getTable = tableName => {
     const output = {};
     allArrays.forEach((arr, idx) => output[TABLES[idx]] = arr);
     AIRTABLE_DATA = output;
-    return output;
     console.log('===============> *** AirtableData retrieved sucessfully ***');
+    return output;
   } catch (reason) {
     console.error('===============> *** There was an error preloading the Airtable API Data. *** Reason: ', reason);
   }
@@ -124,7 +173,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
   function welcome(agent) {
     console.log('WELCOME');
-    console.log('===============> ', AIRTABLE_DATA.Places[0].get('ID'));
+    console.log('===============> AT_DATA: ', JSON.stringify(AIRTABLE_DATA));
     agent.add('Hi I can provide information to you about technology is being used in building and spaces. What place do you want to talk about?');
     const payload = getPayload(agent);
     const { startingIntent } = payload;
@@ -280,24 +329,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   /*
-   * Return a promise to query the Airtable
-   * ARG entityMap:  The entity map which can be created using the mapEntityToInfo() method or manually
-   * ARG formula: a formula used to filter the results from the Airtable (See Airtable API docs for details)
-   */
-  const filterFirstPageByFormula = (formula, entityMap) => {
-    return new Promise((resolve, reject) => {
-      base(entityMap.base)
-        .select({
-          filterByFormula: formula
-        })
-        .firstPage((err, records) => {
-          if (err) return reject(err);
-          return resolve(records);
-        });
-    });
-  };
-
-  /*
    * DF Intent Handlers
    * These are mapped to specific DF intents & that map is passed to the agent
    */
@@ -446,10 +477,10 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   const whatIs = (agent) => {
     const { parameters } = agent;
     const primaryEntity = getPrimaryEntityType(parameters);
-    const entityMap = mapEntityToInfo(primaryEntity);
     const item = titleCase(parameters[primaryEntity]);
-    const query = `{${entityMap.identifier}} = "${item}"`;
-    return filterFirstPageByFormula(query, entityMap)
+    const entityMap = mapEntityToInfo(primaryEntity);
+    const filter = { name: entityMap.identifier, value: capitalizeString(parameters[primaryEntity]) };
+    return select(entityMap.base, filter)
       .then(records => {
         if (!records.length) {
           agent.add(`I cannot seem to find any information about the ${item} in my records.`);
@@ -475,8 +506,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
       })
       .then(records => {
         if (!records || !records.length) return;
-        agent.add('You can learn more about the components that make up the system.');
-        records.forEach(component => agent.add(new Suggestion(component.get('Name'))));
+        return agent.add('You can learn more about the components that make up the system.');
+        //records.forEach(component => agent.add(new Suggestion(component.get('Name'))));
       });
   };
 
@@ -571,28 +602,35 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getSystems = agent => {
+    console.log('getSystems()...');
     const placeId = getPlaceId(agent);
-    const entityMap = { base: 'Components' };
-    return filterFirstPageByFormula('', entityMap)
+    return select('Components')
       .then(components => {
         if (!components || !components.length) {
           agent.add(`I couldn't find any technologies listed for this place.`);
         } else {
-          const systems = components.filter(component => {
-            const places = component.get('Place') || [];
-            const hasPlace = places.includes(placeId);
-            const isSystem = Boolean(component.get('System'));
-            return hasPlace && isSystem;
-          })
+            console.log('Found components get systems...');
+            const systems = components.filter(component => {
+              const places = component.get('Place') || [];
+              const hasPlace = places.includes(placeId);
+              const isSystem = Boolean(component.get('System'));
+              return hasPlace && isSystem;
+            })
             .map(component => component.get('Name'));
           if (!systems.length) return agent.add('This place does not have any systems.');
+          console.log('systems: ', systems);
           const list = addAndToLastElement([...systems]);
           const message = list.length > 1 ? `This place has several systems: ${systems.join(', ')}` : `This place has a ${systems} system.`;
+          console.log('message: ', message);
           agent.add(message);
           systems.forEach(name => agent.add(new Suggestion(name)));
         }
       });
   };
+
+  /* const getSystems = agent => {
+    return agent.add('GET SYSTEMS');
+  }; */
 
   const collectsPersonalInfo = (id) => {
     let baseComponent;
@@ -620,45 +658,17 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   };
 
   const getPlaceComponents = placeId => {
-    return new Promise((resolve, reject) => {
-      let components = [];
-      base('Components').select()
-        .eachPage((records, fetchNextPage) => {
-          const filtered = records.filter(r => {
-            const places = r.get('Place');
-            if (!places || !places.length) return false;
-            return r.get('Place').includes(placeId);
-          });
-          components = [...filtered];
-          fetchNextPage();
-        }, err => {
-          if (err) {
-            console.error(err);
-            reject(err);
-            return;
-          }
-          resolve(components);
+    return select('Components')
+      .then(components => {
+        return components.filter(r => {
+          const places = r.get('Place');
+          if (!places || !places.length) return false;
+          return r.get('Place').includes(placeId);
         });
-    });
+      });
   };
 
-  const getDataTypeByName = name => {
-    let components;
-    return new Promise((resolve, reject) => {
-      base('Components').select()
-        .eachPage((records, fetchNextPage) => {
-          components = [...records];
-          fetchNextPage();
-        }, err => {
-          if (err) {
-            console.error(err);
-            reject(err);
-            return;
-          }
-          resolve(components);
-        });
-    });
-  };
+  const getDataTypeByName = name => select('Components');
 
   const placeComponentsCollectsPersonalInfo = placeId => {
     return getPlaceComponents(placeId)
@@ -668,8 +678,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
   const getPersonallyIdentifiableComponents = (placeId, componentId) => {
     let dataTypeId;
-    const formula = '{Name} = "Personal Information"';
-    return filterFirstPageByFormula(formula, { base: 'Data Type' })
+    const filter = { name: 'Name', value: 'Personal Information' };
+    return select('Data Type', filter)
       .then(dataType => dataType[0].get('ID'))
       .then(id => {
         dataTypeId = id;
@@ -718,9 +728,9 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         if (!info) {
           throw new Error(`Data Process info was requested for a component: ${componentId} that does not have any defined.`);
         }
-        return Promise.all(info.map(id => base('Data Process').find(id)));
+        return Promise.all(info.map(id => base('Data Type').find(id)));
       })
-      .then(info => info.map(dataProcess => dataProcess.get('Name')).filter(name => name));
+      .then(info => info.map(record => record.get('Name')).filter(name => name));
   };
 
   const storesImageData = component => {
