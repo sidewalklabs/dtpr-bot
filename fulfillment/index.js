@@ -60,6 +60,7 @@ const getTable = tableName => {
     const output = {};
     allArrays.forEach((arr, idx) => output[TABLES[idx]] = arr);
     AIRTABLE_DATA = output;
+    return output;
     console.log('===============> *** AirtableData retrieved sucessfully ***');
   } catch (reason) {
     console.error('===============> *** There was an error preloading the Airtable API Data. *** Reason: ', reason);
