@@ -1,5 +1,98 @@
 const Airtable = require('airtable');
-const base = new Airtable({apiKey: 'keyZsWLtuGKax2Dro'}).base('appe5T5foKvONA32l');
+const apiKey = 'keyZsWLtuGKax2Dro'; // <-------- AIRTABLE API KEY
+const baseId = 'appe5T5foKvONA32l'; // <-------- AIRTABLE BASE ID
+const airtableBase = new Airtable({ apiKey }).base(baseId);
+
+process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
+
+/*
+ * Buffer a copy of Airtable Data to avoid timeouts on Airtable API requests
+ */
+
+const USE_LIVE_AIRTABLE_API_DATA = true;
+
+const isValidTable = tableName => TABLES.includes(tableName);
+
+const base = tableName => {
+  if (USE_LIVE_AIRTABLE_API_DATA) return airtableBase(tableName);
+  if (!isValidTable(tableName)) throw new Error('Base must be intialized with a valid table name such as: ', TABLES.join(', '));
+  return {
+    find: id => {
+      if (!id) return Promise.resolve(AIRTABLE_DATA[tableName]);
+      return Promise.resolve(AIRTABLE_DATA[tableName].find(record => record.get('ID') === id));
+    }
+  };
+};
+
+// filter ---> { name: "Name", value: "some value to match"}
+const select = (tableName, filter) => {
+  return new Promise(async (resolve, reject) => {
+    if (!isValidTable(tableName)) return reject('Base must be intialized with a valid table name such as: ', TABLES.join(', '));
+    if (filter && (!filter.name || !filter.value)) return reject('If a filter object is provided it must define name & value properties as strings.');
+    let all;
+    try {
+      all = await getTable(tableName);
+    } catch (reason) {
+      return reject(reason);
+    }
+    if (!filter) return resolve(all);
+    return resolve(all.filter(record => record.get(filter.name) === filter.value).filter(r => r));
+  });
+};
+
+let AIRTABLE_DATA = {};
+
+const TABLES = [
+  'Places',
+  'Components',
+  'Accountability',
+  'Purpose',
+  'Technology Type',
+  'Data Type',
+  'Data Process',
+  'Access',
+  'Storage',
+  'Connections'
+];
+
+const getTable = tableName => {
+  let arr = [];
+  return new Promise((resolve, reject) => {
+    airtableBase(tableName).select()
+      .eachPage((records, fetchNextPage) => {
+        arr = [...records];
+        fetchNextPage();
+      }, err => {
+        if (err) {
+          console.error(err);
+          reject(err);
+          return;
+        }
+        resolve(arr);
+      });
+  });
+ };
+
+ const getAirtableData = async () => {
+  console.log('===============> getAirtableData()...');
+  try {
+    const allArrays = await Promise.all(TABLES.map(name => getTable(name)));
+    const output = {};
+    allArrays.forEach((arr, idx) => output[TABLES[idx]] = arr);
+    AIRTABLE_DATA = output;
+    return output;
+    console.log('===============> *** AirtableData retrieved sucessfully ***');
+  } catch (reason) {
+    console.error('===============> *** There was an error preloading the Airtable API Data. *** Reason: ', reason);
+  }
+};
+
+/*
+ * This method is an async fire & forget
+ * It runs at deploy time.
+ * It fetches a copy of the Airtable API data & stores it locally.
+ */
+// getAirtableData();
 
 const agent = {
   add: (message) => console.log(message)
@@ -219,17 +312,6 @@ const mapEntityToInfo = (type) => {
   return map;
 }
 
-const filterFirstPageByFormula = (formula, entityMap) => {
-  return new Promise((resolve, reject) => {
-    base(entityMap.base)
-      .select({ filterByFormula: formula })
-      .firstPage((err, records) => {
-      if (err) return reject(err);
-      return resolve(records);
-    });
-  });
-};
-
 const getChildComponents = component => {
   if (!component || typeof component.get !== 'function') return Promise.resolve([]);
   const children = component.get('Child components');
@@ -260,11 +342,8 @@ const whatIs = () => {
   };
   const primaryEntity = getPrimaryEntityType(parametersMock);
   const entityMap = mapEntityToInfo(primaryEntity);
-  console.log(`Q: What is ${parametersMock[primaryEntity]}? (${primaryEntity})`);
-  const query = `{${entityMap.identifier}} = "${capitalizeString(parametersMock[primaryEntity])}"`;
-  console.log('entityMap: ', entityMap);
-  console.log('query: ', query);
-  filterFirstPageByFormula(query, entityMap)
+  const filter = { name: entityMap.identifier, value: capitalizeString(parametersMock[primaryEntity]) };
+  select(entityMap.base, filter)
     .then(records => {
       if (!records.length) {
         agent.add('I am not able to provide an answer to that question currently. I will take a note and look for the future.');
@@ -332,10 +411,10 @@ const getDataTypesList = () => {
           agent.add(`This component doesn't appear to have Data Process information to share.`);
           throw new Error(`Data Process info was requested for a component: ${componentId} that does not have any defined.`);
         }
-        return Promise.all(info.map(id => base('Data Process').find(id)));
+        return Promise.all(info.map(id => base('Data Type').find(id)));
     })
     .then(info => {
-      const names = info.map(dataProcess => dataProcess.get('Name')).filter(name => name);
+      const names = info.filter(name => name).map(dataProcess => dataProcess.get('Name'));
       const list = addAndToLastElement([...names]);
       agent.add(`The data collected is stored as ${list.join(', ')}.`);
       // add suggestion chips
@@ -383,8 +462,7 @@ const getTargetOutcome = () => {
 
 const getSystems = () => {
   const placeId = 'recHJJkuqk0AYjHa9';
-  const entityMap = { base: 'Components' };
-  return filterFirstPageByFormula('', entityMap)
+  select('Components')
     .then(components => {
       if (!components || !components.length) {
         agent.add(`I couldn't find any technologies listed for this place.`);
@@ -432,43 +510,18 @@ const collectsPersonalInfo = (id) => {
 };
 
 const getPlaceComponents = placeId => {
-  return new Promise((resolve, reject) => {
-    let components = [];
-    base('Components').select()
-      .eachPage((records, fetchNextPage) => {
-        const filtered = records.filter(r => {
-          const places = r.get('Place');
-          if (!places || !places.length) return false;
-          return r.get('Place').includes(placeId);
-        });
-        components = [...filtered];
-        fetchNextPage();
-      }, err => {
-        if (err) {
-          console.error(err);
-          reject(err);
-          return;
-        }
-        resolve(components);
+  return select('Components')
+    .then(components => {
+      return components.filter(r => {
+        const places = r.get('Place');
+        if (!places || !places.length) return false;
+        return r.get('Place').includes(placeId);
       });
-  });
+    });
 };
 
 const getDataTypeByName = name => {
-  return new Promise((resolve, reject) => {
-    base('Components').select()
-      .eachPage((records, fetchNextPage) => {
-        components = [...records];
-        fetchNextPage();
-      }, err => {
-        if (err) {
-          console.error(err);
-          reject(err);
-          return;
-        }
-        resolve(components);
-      });
-  })
+  return select('Components');
 };
 
 const placeComponentsCollectsPersonalInfo = placeId => {
@@ -481,9 +534,9 @@ const placeComponentsCollectsPersonalInfo = placeId => {
 // on whether the specific component tracks personal data
 const getPersonallyIdentifiableComponents = (placeId, componentId) => {
   let dataTypeId;
-  const formula = '{Name} = "Personal Information"';
-  return filterFirstPageByFormula(formula, { base: 'Data Type'})
-    .then(dataType => dataType[0].get('ID'))
+  const filter = { name: 'Name', value: 'Personal Information' };
+  return select('Data Type', filter)
+    .then(dataTypes => dataTypes[0].get('ID'))
     .then(id => {
       dataTypeId = id;
       return getPlaceComponents(placeId)
@@ -495,6 +548,7 @@ const getPersonallyIdentifiableComponents = (placeId, componentId) => {
 }
 
 const getDataTypes = component => {
+  if (!component) throw new Error('A component must be provided to this method as an argument.');
   const componentId = component.get('ID');
   return base('Components').find(componentId)
     .then(component => {
@@ -504,11 +558,14 @@ const getDataTypes = component => {
         }
         return Promise.all(info.map(id => base('Data Process').find(id)));
     })
-    .then(info => info.map(dataProcess => dataProcess.get('Name')).filter(name => name));
+    .then(info => info.filter(name => name).map(dataProcess => dataProcess.get('Name')));
 }
 
 const storesImageData = component => {
+  console.log('storesImageData...');
   const PIXEL_BASED_IMAGE = 'Pixel-based Image';
+  if (!component) return false;
+  console.log('has component');
   return getDataTypes(component)
     .then(dataTypes => {
       if (!dataTypes || !dataTypes.length) return false;
@@ -516,9 +573,11 @@ const storesImageData = component => {
     });
 };
 
-const getCollectsImageData = (id) => {
+const getCollectsImageData = () => {
+  console.log('getCollectsImageData()...');
   let baseComponent;
-  const cId = id || componentId;
+  const cId = componentId;
+  console.log('cId: ', cId);
   return base('Components').find(cId)
     .then(storesImageData)
     .then(doesStoreImageData => {
@@ -527,28 +586,26 @@ const getCollectsImageData = (id) => {
     })
 };
 
-// getTimeRetained();
-// getStorage();
-// getAccess();
-// getAccountability();
-// whatIs();
-// console.log(titleCase('Security camera RFID Red blue green.'));
-// getDataProcessList();
-// getDataTypesList();
-// whereAmI();
-// getTheParts();
-// getTargetOutcome();
-// getSystems();
-// collectsPersonalInfo();
-// collectsPersonalInfo('rec5d3NEMIf4vXGpW');
-getPlaceComponents('recAGNOkvYSjMsL0P')
-  .then(results => console.log(results.length));
-// placeComponentsCollectsPersonalInfo('recAGNOkvYSjMsL0P')
-//   .then(console.log);
-// getPersonallyIdentifiableComponents('recHJJkuqk0AYjHa9') // boston mall expects yes
-//   .then(components => console.log(components.map(c => c.get('Name'))));
-// getPersonallyIdentifiableComponents('recHJJkuqk0AYjHa9', 'rec8e5i3QIUQ3uNXj') // boston mall & light level sensor expect no
-//   .then(components => console.log(components.map(c => c.get('Name'))));
-// getPersonallyIdentifiableComponents('recHJJkuqk0AYjHa9', 'recT9MVNlQBhjSBSE') // boston mall & magic mirror
-//   .then(components => console.log(components.map(c => c.get('Name'))));
-// getCollectsImageData();
+getAirtableData()
+  .then(getAccess)
+  .then(getSystems)
+  .then(getTargetOutcome)
+  .then(getTimeRetained)
+  .then(getStorage)
+  .then(getAccess)
+  .then(getAccountability)
+  .then(whatIs)
+  .then(getDataProcessList)
+  .then(getDataTypesList)
+  .then(whereAmI)
+  .then(getTheParts)
+  .then(getTargetOutcome)
+  .then(getSystems)
+  .then(collectsPersonalInfo)
+  .then(getPlaceComponents)
+  .then(placeComponentsCollectsPersonalInfo)
+  .then(getPersonallyIdentifiableComponents)
+  .then(getCollectsImageData)
+  .then(results => {
+    return placeComponentsCollectsPersonalInfo('recAGNOkvYSjMsL0P');
+  });
