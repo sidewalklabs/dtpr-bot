@@ -16,18 +16,18 @@ Agentive technologies with verbal interfaces are becoming increasingly relevant 
 ## The Components of the Chat Bot
 
 ### DTPR Taxonomy
-The chat bot uses the data and the set of defintions in the DTPR Taxonomy to be able to understand and attempt to respond to the questions it is asked about places. 
+The chat bot uses the data and the set of definitions in the DTPR Taxonomy to be able to understand and attempt to respond to the questions it is asked about places. 
 
 The DTPR taxonomy is a full set of definitions of the key concpets and entities that structure our understanding of how data and technology are functioning in a space. 
 
 The initial draft of the taxonomy and the associated icons are managed in an Airtable, which you can see [here](https://airtable.com/shrsW7o7ji3VjsZSz).
 
 ### Dialog-Flow
-[Dialogflow](https://dialogflow.com/) is a service that runs on Google's Cloud Platform. Dialog-Flow uses machine learning to recognize intents from human conversational inputs and maps them to responses. 
+[Dialog-Flow](https://dialogflow.com/) is a service that runs on Google's Cloud Platform. Dialog-Flow uses machine learning to recognize intents from human conversational inputs and maps them to responses. 
 
-It also provides a way to inject custom fulfillment logic into this process. Dialog-Flow has a set of table stakes sematic entities that it can recognize however it is also possible to extend these categories. 
+It also provides a way to inject custom fulfillment logic into this process. Dialog-Flow has a set of table stakes semantic entities that it can recognize however it is also possible to extend these categories. 
 
-The categories from the DTPR Taxonomy have been added to the DTRP Chat Bot Dialog-Flow project. A Dialog-Flow project also contains a list of [intents](https://github.com/normative/dtpr-bot/tree/master/intents). Intents are meant to represent the 'intent' of a person interacting with the bot and also contain a mapping of the phrases used to train the recognition system.
+The categories from the DTPR Taxonomy have been added to the DTPR Chat Bot Dialog-Flow project. A Dialog-Flow project also contains a list of [intents](https://github.com/normative/dtpr-bot/tree/master/intents). Intents are meant to represent the intention of a person interacting with the bot. They also contain a mapping of the phrases used to train the recognition system.
 
 Intents are mapped to Node functions in the custom [fulfillment code](https://github.com/normative/dtpr-bot/blob/master/fulfillment/index.js) which ultimately control what is communicated back to the user.
 
@@ -43,8 +43,8 @@ The [fulfillment code](https://github.com/normative/dtpr-bot/blob/master/fulfill
 git clone https://github.com/normative/dtpr-bot.git
 ```
 - Compress the repo to a Zip file. This is the package that will be uploaded to Dialog-Flow.
-- Create a Dialog-Flow account
-- Create an Agent
+- Create a Dialog-Flow account.
+- Create an Agent.
 - In the settings for the Agent which can be accessed via the Gear icon next to the name in the list you will find the Import/Export tab.
 - Import the above Zip file.
 - Under general settings ensure the checkbox for the 'V2 API' is selected.
@@ -72,7 +72,7 @@ const chatConfig = {
 ```
 
 - This data can be accessed by the fulfillment code using the getPayload() method.
-- Finally copy and paste the code from fulfillment/index.js into the code window in the Fulfillment section of the Dialg-Flow agent. This is also how you will update the fulfillment logic if you make changes to it.
+- Finally copy and paste the code from fulfillment/index.js into the code window in the Fulfillment section of the Dialog-Flow agent. This is also how you will update the fulfillment logic if you make changes to it.
 - A file fulfillment/sandbox.js has been provided to serve as a place to test and develop fulfillment code. If you make use of it you must install the dependencies.
 
 ```
