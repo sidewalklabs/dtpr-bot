@@ -6,17 +6,30 @@ You can try out the DTPR Bot [here](https://normative.github.io/dtpr-bot/index.h
 
 [Digital Transparency in the Public Realm](https://sidewalklabs.com/dtpr/) is a project that seeks to facilitate the co-creation of prototypes that can advance digital transparency and enable agency in the world's public spaces.
 
-With cities increasingly embracing digital technology in the built environment, we believe people should be able to quickly understand how these technologies work and the purposes they serve. The DTPR is first & foremost a communication standard. It provides a way to think about technology and data in shared spaces. 
+With cities increasingly embracing digital technology in the shared environment, we believe people should be able to quickly understand how these technologies work and the purposes they serve. 
 
-As a communication standard it can be implemented in a variety of mediums. Agentive technologies with verbal interfaces are becoming increasingly relevant to our interaction with our environment and seem likely to continue that trajectory into the future. The DTPR-Bot is an exploration of how the DTPR taxonomy could provide the underlying structure to conversations that people could have with the spaces they live in.
+The DTPR is first & foremost a communication standard. It provides a way to think about technology and data in shared spaces.
+As a communication standard it can be implemented in a variety of mediums. 
+
+Agentive technologies with verbal interfaces are becoming increasingly relevant to our interaction with our environment and seem likely to continue that trajectory into the future. The DTPR-Bot is an exploration of how the DTPR taxonomy could provide the underlying structure to conversations that people will have with the spaces they live in.
 
 ## The Components of the Chat Bot
 
 ### DTPR Taxonomy
-The chat bot uses the data and the set of defintions in the DTPR Taxonomy to be able to understand and attempt to respond to the questions it is asked about places. The DTPR taxonomy is a full set of definitions of the key concpets and entities that structure our understanding of how data and technology are functioning in a space.  The initial draft of the taxonomy and the associated icons are managed in an Airtable, which you can see [here](https://airtable.com/shrsW7o7ji3VjsZSz). It is this Airtable that provides both the content and category structure used to respond to a user's questions to the system.
+The chat bot uses the data and the set of defintions in the DTPR Taxonomy to be able to understand and attempt to respond to the questions it is asked about places. 
+
+The DTPR taxonomy is a full set of definitions of the key concpets and entities that structure our understanding of how data and technology are functioning in a space. 
+
+The initial draft of the taxonomy and the associated icons are managed in an Airtable, which you can see [here](https://airtable.com/shrsW7o7ji3VjsZSz).
 
 ### Dialog-Flow
-[Dialogflow](https://dialogflow.com/) is a service that runs on Google's Cloud Platform that uses machine learning to recognize intents from human conversational inputs and maps them to responses. It also provides a way to inject custom fulfillment logic into this process. Dialog-Flow has a set of table stakes sematic entities that it can recognize however it is also possible to extend these categories. The categories from the DTPR Taxonomy have been added to the DTRP Chat Bot Dialog-Flow project. A Dialog-Flow project also contains a list of intents. Intents are meant to represent the 'intent' of a person interacting with the bot. What is it that they want? What are the varied ways that this intent might be expressed? This custom mapping of the intents that people might have while inspecting the technology in shared space to the ways that they would go about asking for this information is also a part of the Dialog-Flow project. This is managed partially by the list of intents which are managed within the Dialog-Flow service in combination with the Node functions in the custom fulfillment code.
+[Dialogflow](https://dialogflow.com/) is a service that runs on Google's Cloud Platform. Dialog-Flow uses machine learning to recognize intents from human conversational inputs and maps them to responses. 
+
+It also provides a way to inject custom fulfillment logic into this process. Dialog-Flow has a set of table stakes sematic entities that it can recognize however it is also possible to extend these categories. 
+
+The categories from the DTPR Taxonomy have been added to the DTRP Chat Bot Dialog-Flow project. A Dialog-Flow project also contains a list of [intents](https://github.com/normative/dtpr-bot/tree/master/intents). Intents are meant to represent the 'intent' of a person interacting with the bot and also contain a mapping of the phrases used to train the recognition system.
+
+Intents are mapped to Node functions in the custom [fulfillment code](https://github.com/normative/dtpr-bot/blob/master/fulfillment/index.js) which ultimately control what is communicated back to the user.
 
 To learn more about how Dialog-Flow handles requests, entities and conversational context you can read the [documentation](https://dialogflow.com/docs).
 
