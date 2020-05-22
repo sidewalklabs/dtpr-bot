@@ -82,4 +82,4 @@ Sidewalk Labs trademarks and other brand features within these works are not inc
 
 ## How to Contribute
 
-[Sidewalk Labs](https://www.sidewalklabs.com/) runs this project. You can contribute by logging requests for functionality or issues with the implementation. We’re looking for partners who want to advance the use and adoption of these standards in the public realm. Please get in touch at dtpr-hello@sidewalklabs.com if you would be interested to add contribute to the code base.
+[Sidewalk Labs](https://www.sidewalklabs.com/) runs this project. You can contribute by logging requests for functionality or issues with the implementation. We’re looking for partners who want to advance the use and adoption of these standards in the public realm. Please get in touch at dtpr-hello@sidewalklabs.com if you would be interested to contribute to this code base.
