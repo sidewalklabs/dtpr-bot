@@ -1,12 +1,14 @@
 # Digital Transparency in the Public Realm Chat Bot
 
-[Digital Transparency in the Public Realm](https://sidewalklabs.com/dtpr/) is a project that seeks to facilitate the co-creation of prototypes that can advance digital transparency and enable agency in the world's public spaces.
-
-With cities increasingly embracing digital technology in the built environment, we believe people should be able to quickly understand how these technologies work and the purposes they serve. The DTPR is first & foremost a communication standard. It provides a way to think about technology and data in shared spaces. As a communication standard it can be implemented in a variety of mediums. Agentive technologies with verbal interfaces are becoming increasingly relevant to our interaction with our environment and seem likely to continue that trajectory into the future. The DTPR-Bot is an exploration of how the DTPR taxonomy could provide the underlying categorical structure to a conversation that people could have with the spaces they live in.
-
-This repository includes all the resources necessary to stand up a DTPR Chatbot on Google's Dialog-Flow service and examples of how to integrate a chat interface. So using this repository in combination with Dialog-Flow it should be possible to run your own experiments or contribute to the project.
+This repository includes all the resources necessary to stand up a DTPR Chatbot on Google's Dialog-Flow service and it has examples of how to integrate a client chat interface. 
 
 You can try out the DTPR Bot [here](https://normative.github.io/dtpr-bot/index.html)
+
+[Digital Transparency in the Public Realm](https://sidewalklabs.com/dtpr/) is a project that seeks to facilitate the co-creation of prototypes that can advance digital transparency and enable agency in the world's public spaces.
+
+With cities increasingly embracing digital technology in the built environment, we believe people should be able to quickly understand how these technologies work and the purposes they serve. The DTPR is first & foremost a communication standard. It provides a way to think about technology and data in shared spaces. 
+
+As a communication standard it can be implemented in a variety of mediums. Agentive technologies with verbal interfaces are becoming increasingly relevant to our interaction with our environment and seem likely to continue that trajectory into the future. The DTPR-Bot is an exploration of how the DTPR taxonomy could provide the underlying structure to conversations that people could have with the spaces they live in.
 
 ## The Components of the Chat Bot
 
