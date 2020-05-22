@@ -24,7 +24,9 @@ The custom fulfillment code is a series of Node functions which are executed as 
 ## Getting Started
 
 - Download the repo by cloning it.
-```git clone https://github.com/normative/dtpr-bot.git```
+```
+git clone https://github.com/normative/dtpr-bot.git
+```
 - Compress the repo to a Zip file. This is the package that will be uploaded to Dialog-Flow.
 - Create a Dialog-Flow account
 - Create an Agent
