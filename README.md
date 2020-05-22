@@ -70,7 +70,7 @@ const chatConfig = {
       componentId: 'recT9MVNlQBhjSBSE' // Airtable 'components' id of the mirror computer vision system
     };
 ```
-
+- Remember to replace the agentId in the chatConfig object with the agent-id from the integrations in the previous step.
 - This data can be accessed by the fulfillment code using the getPayload() method.
 - Finally copy and paste the code from fulfillment/index.js into the code window in the Fulfillment section of the Dialog-Flow agent. This is also how you will update the fulfillment logic if you make changes to it.
 - A file fulfillment/sandbox.js has been provided to serve as a place to test and develop fulfillment code. If you make use of it you must install the dependencies.
