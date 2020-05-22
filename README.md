@@ -34,7 +34,7 @@ Intents are mapped to Node functions in the custom [fulfillment code](https://gi
 To learn more about how Dialog-Flow handles requests, entities and conversational context you can read the [documentation](https://dialogflow.com/docs).
 
 ### Fulfillment Code
-The custom fulfillment code is a series of Node functions which are executed as handlers when intents are triggered. To function correctly the Node in the source directory must be copied into your Dialog-Flow agent's fulfillment section or deployed on an external server using Dialog-Flow's webhook implementation.
+The [fulfillment code](https://github.com/normative/dtpr-bot/blob/master/fulfillment/index.js) is a series of Node functions which are executed as handlers when intents are triggered. To function correctly the Node in the source directory must be copied into your Dialog-Flow agent's fulfillment section or deployed on an external server using Dialog-Flow's webhook implementation.
 
 ## Getting Started
 
