@@ -27,7 +27,7 @@ The initial draft of the taxonomy and the associated icons are managed in an Air
 
 It also provides a way to inject custom fulfillment logic into this process. Dialog-Flow has a set of table stakes semantic entities that it can recognize however it is also possible to extend these categories. 
 
-The categories from the DTPR Taxonomy have been added to the DTPR Chat Bot Dialog-Flow project. A Dialog-Flow project also contains a list of [intents](https://github.com/normative/dtpr-bot/tree/master/intents). Intents are meant to represent the intention of a person interacting with the bot. They also contain a mapping of the phrases used to train the recognition system.
+The categories from the DTPR Taxonomy have been added to the DTPR Chat Bot Dialog-Flow project as entities. You can view the JSON representation of the entities [here](https://github.com/normative/dtpr-bot/tree/master/entities). A Dialog-Flow project also contains a list of [intents](https://github.com/normative/dtpr-bot/tree/master/intents). Intents are meant to represent the intention of a person interacting with the bot. They also contain a mapping of the phrases used to train the recognition system.
 
 Intents are mapped to Node functions in the custom [fulfillment code](https://github.com/normative/dtpr-bot/blob/master/fulfillment/index.js) which ultimately control what is communicated back to the user.
 
