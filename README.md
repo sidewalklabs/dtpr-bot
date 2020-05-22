@@ -6,6 +6,8 @@ With cities increasingly embracing digital technology in the built environment, 
 
 This repository includes all the resources necessary to stand up a DTPR Chatbot on Google's Dialog-Flow service and examples of how to integrate a chat interface. So using this repository in combination with Dialog-Flow it should be possible to run your own experiments or contribute to the project.
 
+You can try out the DTPR Bot [here](https://normative.github.io/dtpr-bot/index.html)
+
 ## The Components of the Chat Bot
 
 ### DTPR Taxonomy
@@ -31,7 +33,8 @@ The custom fulfillment code is a series of Node functions which are executed as 
 - Under general settings ensure the checkbox for the 'V2 API' is selected.
 - Your agent id will be required as parameter to pass into the front end chat client. An easy way to get it is to go the 'integrations' section. Toggle on the Dialog-Flow Messenger Beta. Then click on the button to get sample code for your integrations that will look something like this. Copy the agent-id.
 
-```<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+```
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
 <df-messenger
   intent="WELCOME"
   chat-title="swl-dtpr-places-bot"
@@ -39,14 +42,18 @@ The custom fulfillment code is a series of Node functions which are executed as 
   language-code="en"
 ></df-messenger>
 ```
+
 - To create the chat bot client check out the pages under the integration examples for sample implementations. Note that the user-id parameter is passed into the Dialog-Flow backend as a string. This string has been used to inject JSON formatted data into the chat client request. It is this data that is used to provide the agent with the starting context for the conversation in terms of the intent, place, & component that the user is interested in.
-```const chatConfig = {
+
+```
+const chatConfig = {
       agentId: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaa', // this is the dialog-flow id for the specific agent which should handle the requests
       startingIntent: 'learn-about-component', // the intent that the conversation will start on - also persisted under the originalIntent
       placeId: 'recHJJkuqk0AYjHa9', // the place that the system or component is in - id corresponds to DTPR Airtable place id
       componentId: 'recT9MVNlQBhjSBSE' // Airtable 'components' id of the mirror computer vision system
     };
 ```
+
 - This data can be accessed by the fulfillment code using the getPayload() method.
 - Finally copy and paste the code from fulfillment/index.js into the code window in the Fulfillment section of the Dialg-Flow agent. This is also how you will update the fulfillment logic if you make changes to it.
 
